@@ -31,6 +31,7 @@ public class Musico implements Serializable {
 		this.nome = nome;
 	}
 	
+	
 
 	public Long getId() {
 		return id;
