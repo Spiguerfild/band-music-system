@@ -9,26 +9,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.music.dto.MusicoDTO;
+import br.com.music.dto.MusicaDTO;
 
-import br.com.music.services.MusicoService;
+import br.com.music.services.MusicaService;
 
 @RestController
-@RequestMapping(value = "/musicos")
-public class MusicoResource {
+@RequestMapping(value = "/musicas")
+public class MusicaResource {
 
 	@Autowired
-	private MusicoService service;
+	private MusicaService service;
 
 	@GetMapping
-	public ResponseEntity<List<MusicoDTO>> findAll() {
-		List<MusicoDTO> list = service.findAll();
+	public ResponseEntity<List<MusicaDTO>> findAll() {
+		List<MusicaDTO> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<MusicoDTO> findById(@PathVariable Long id) {
-		MusicoDTO dto = service.findById(id);
+	public ResponseEntity<MusicaDTO> findById(@PathVariable Long id) {
+		MusicaDTO dto = service.findById(id);
 		return ResponseEntity.ok().body(dto);
 	}
 }

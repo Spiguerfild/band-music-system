@@ -1,0 +1,15 @@
+INSERT INTO TB_MUSICO (nome) VALUES ('Luis Henrique');
+INSERT INTO TB_MUSICO (nome) VALUES ('Isabella Silva');
+INSERT INTO TB_MUSICO (nome) VALUES ('Cassiano');
+INSERT INTO TB_MUSICO (nome) VALUES ('João');
+INSERT INTO TB_MUSICO (nome) VALUES ('Ana Elisa');
+INSERT INTO TB_MUSICO (nome) VALUES ('Gabriel');
+INSERT INTO TB_INSTRUMENTO (nome) VALUES ('Violão');
+INSERT INTO TB_INSTRUMENTO (nome) VALUES ('Guitarra');
+INSERT INTO TB_INSTRUMENTO (nome) VALUES ('Baixo');
+INSERT INTO TB_INSTRUMENTO (nome) VALUES ('Teclado');
+INSERT INTO TB_INSTRUMENTO (nome) VALUES ('Bateria');
+INSERT INTO TB_INSTRUMENTO (nome) VALUES ('Vocal');
+INSERT INTO TB_MUSICA (nome, autor) VALUES ('Me Atraiu','Gabriela Rocha');
+INSERT INTO TB_MUSICA (nome, autor) VALUES ('Bondade De Deus','Isaías Saad');
+INSERT INTO TB_MUSICA (nome, autor) VALUES ('Só Tu És Santo','Morada');
