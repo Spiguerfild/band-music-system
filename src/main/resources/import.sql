@@ -13,3 +13,7 @@ INSERT INTO TB_INSTRUMENTO (nome) VALUES ('Vocal');
 INSERT INTO TB_MUSICA (nome, autor) VALUES ('Me Atraiu','Gabriela Rocha');
 INSERT INTO TB_MUSICA (nome, autor) VALUES ('Bondade De Deus','Isaías Saad');
 INSERT INTO TB_MUSICA (nome, autor) VALUES ('Só Tu És Santo','Morada');
+INSERT INTO TB_BANDA (nome) VALUES ('Cassiano');
+INSERT INTO TB_BANDA (nome) VALUES ('Caio');
+INSERT INTO TB_BANDA (nome) VALUES ('Cícero');
+INSERT INTO TB_BANDA (nome) VALUES ('Peterson');
