@@ -9,9 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.music.dto.MusicoDaBandaDTO;
-
 import br.com.music.entities.MusicoDaBanda;
-
 import br.com.music.repositories.MusicoDaBandaRepository;
 
 

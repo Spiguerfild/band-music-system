@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import br.com.music.entities.Instrumento;
 import br.com.music.entities.Musico;
+import br.com.music.entities.MusicoDaBanda;
 
 public class MusicoDaBandaDTO implements Serializable {
 
@@ -27,7 +28,7 @@ public class MusicoDaBandaDTO implements Serializable {
 	}
 	
 	
-	public MusicoDaBandaDTO(MusicoDaBandaDTO entity) {
+	public MusicoDaBandaDTO(MusicoDaBanda entity) {
 		this.id = entity.getId();
 		this.musico = entity.getMusico();
 		this.instrumento = entity.getInstrumento();

@@ -22,6 +22,7 @@ public class MusicoDaBanda implements Serializable {
 	private Instrumento instrumento;
 
 	public MusicoDaBanda() {
+		
 	}
 
 	public MusicoDaBanda(Long id, Musico musico, Instrumento instrumento) {
