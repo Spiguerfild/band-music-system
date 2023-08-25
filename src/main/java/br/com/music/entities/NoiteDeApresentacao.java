@@ -1,6 +1,7 @@
 package br.com.music.entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
@@ -12,60 +13,69 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_musicodabanda")
-public class MusicoDaBanda implements Serializable {
+@Table(name = "tb_noitedeapresentacao")
+public class NoiteDeApresentacao implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private LocalDate data;
 	@ManyToOne
-	@JoinColumn(name = "id_musico_fk")
-	private Musico musico;
-	@ManyToOne
-	@JoinColumn(name = "id_instrumento_fk")
-	private Instrumento instrumento;
-
-	public MusicoDaBanda() {
+	@JoinColumn(name = "id_banda_fk")
+	private Banda banda;
+	
+	
+	public NoiteDeApresentacao() {
+		
 		
 	}
 
-	public MusicoDaBanda(Long id, Musico musico, Instrumento instrumento) {
 
+	public NoiteDeApresentacao(Long id, LocalDate data, Banda banda) {
+		
 		this.id = id;
-		this.musico = musico;
-		this.instrumento = instrumento;
+		this.data = data;
+		this.banda = banda;
 	}
+
 
 	public Long getId() {
 		return id;
 	}
 
+
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public Musico getMusico() {
-		return musico;
+
+	public LocalDate getData() {
+		return data;
 	}
 
-	public void setMusico(Musico musico) {
-		this.musico = musico;
+
+	public void setData(LocalDate data) {
+		this.data = data;
 	}
 
-	public Instrumento getInstrumento() {
-		return instrumento;
+
+	public Banda getBanda() {
+		return banda;
 	}
 
-	public void setInstrumento(Instrumento instrumento) {
-		this.instrumento = instrumento;
+
+	public void setBanda(Banda banda) {
+		this.banda = banda;
 	}
+
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -75,7 +85,7 @@ public class MusicoDaBanda implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MusicoDaBanda other = (MusicoDaBanda) obj;
+		NoiteDeApresentacao other = (NoiteDeApresentacao) obj;
 		return Objects.equals(id, other.id);
 	}
 

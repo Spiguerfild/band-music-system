@@ -17,3 +17,5 @@ INSERT INTO TB_BANDA (nome) VALUES ('Cassiano');
 INSERT INTO TB_BANDA (nome) VALUES ('Caio');
 INSERT INTO TB_BANDA (nome) VALUES ('Cícero');
 INSERT INTO TB_BANDA (nome) VALUES ('Peterson');
+INSERT INTO TB_MUSICODABANDA (id_musico_fk, id_instrumento_fk) VALUES (1, 2);
+INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-08-25', 2);
