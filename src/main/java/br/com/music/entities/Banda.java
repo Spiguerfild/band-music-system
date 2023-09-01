@@ -1,12 +1,17 @@
 package br.com.music.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 
@@ -21,6 +26,12 @@ public class Banda implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
+	
+	@ManyToMany
+	@JoinTable(name = "tb_musicoinstrumentobanda",
+	joinColumns = @JoinColumn(name = "banda_id"),
+	inverseJoinColumns = @JoinColumn(name = "musico_da_banda_id"))
+	Set<MusicoDaBanda> musicos = new HashSet<>();
 	
 	public Banda() {
 		
