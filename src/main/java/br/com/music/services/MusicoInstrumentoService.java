@@ -9,36 +9,36 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.music.dto.MusicoDaBandaDTO;
-import br.com.music.entities.MusicoDaBanda;
-import br.com.music.repositories.MusicoDaBandaRepository;
+import br.com.music.dto.MusicoInstrumentoDTO;
+import br.com.music.entities.MusicoInstrumento;
+import br.com.music.repositories.MusicoInstrumentoRepository;
 import br.com.music.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 
 
 @Service
-public class MusicoDaBandaService {
+public class MusicoInstrumentoService {
 
 	@Autowired
-	private MusicoDaBandaRepository repository;
+	private MusicoInstrumentoRepository repository;
 
 	@Transactional(readOnly = true)
-	public List<MusicoDaBandaDTO> findAll(){
-		List<MusicoDaBanda> lista = repository.findAll();
-		return lista.stream().map(x -> new MusicoDaBandaDTO(x)).collect(Collectors.toList());
+	public List<MusicoInstrumentoDTO> findAll(){
+		List<MusicoInstrumento> lista = repository.findAll();
+		return lista.stream().map(x -> new MusicoInstrumentoDTO(x)).collect(Collectors.toList());
 	}
 	
 	@Transactional(readOnly = true)
-	public MusicoDaBandaDTO findById(Long id) {
-		Optional<MusicoDaBanda> obj = repository.findById(id);
+	public MusicoInstrumentoDTO findById(Long id) {
+		Optional<MusicoInstrumento> obj = repository.findById(id);
 		
-		MusicoDaBanda entity = obj.orElseThrow(() -> new ResourceNotFoundException("O registro solicitado não foi localizado."));
-		return new MusicoDaBandaDTO(entity);		
+		MusicoInstrumento entity = obj.orElseThrow(() -> new ResourceNotFoundException("O registro solicitado não foi localizado."));
+		return new MusicoInstrumentoDTO(entity);		
 	}
 
 	@Transactional
-	public MusicoDaBandaDTO insert(MusicoDaBandaDTO dto) {
-		MusicoDaBanda entity = new MusicoDaBanda();
+	public MusicoInstrumentoDTO insert(MusicoInstrumentoDTO dto) {
+		MusicoInstrumento entity = new MusicoInstrumento();
 		
 		entity.setInstrumento(dto.getInstrumento());
 		entity.setMusico(dto.getMusico());
@@ -47,21 +47,21 @@ public class MusicoDaBandaService {
 		
 		entity = repository.save(entity);
 
-		return new MusicoDaBandaDTO(entity);
+		return new MusicoInstrumentoDTO(entity);
 	}
 
 	@Transactional
-	public MusicoDaBandaDTO update(Long id, MusicoDaBandaDTO dto) {
+	public MusicoInstrumentoDTO update(Long id, MusicoInstrumentoDTO dto) {
 		
 		try {
-			MusicoDaBanda entity = repository.getReferenceById(id);
+			MusicoInstrumento entity = repository.getReferenceById(id);
 			
 			entity.setInstrumento(dto.getInstrumento());
 			entity.setMusico(dto.getMusico());
 			
 			entity = repository.save(entity);
 	
-			return new MusicoDaBandaDTO(entity);
+			return new MusicoInstrumentoDTO(entity);
 		} catch(EntityNotFoundException e) {
 			throw new ResourceNotFoundException(
 					"O recurso com o ID "+id+" não foi localizado");

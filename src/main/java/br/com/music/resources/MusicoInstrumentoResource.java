@@ -15,30 +15,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.music.dto.MusicoDaBandaDTO;
-import br.com.music.services.MusicoDaBandaService;
+import br.com.music.dto.MusicoInstrumentoDTO;
+import br.com.music.services.MusicoInstrumentoService;
 
 @RestController
 @RequestMapping(value = "/musicosdasbandas")
-public class MusicoDaBandaResource {
+public class MusicoInstrumentoResource {
 	
 	@Autowired
-	private MusicoDaBandaService service;
+	private MusicoInstrumentoService service;
 	
 	@GetMapping
-	public ResponseEntity<List<MusicoDaBandaDTO>> findAll() {
-		List<MusicoDaBandaDTO> list = service.findAll();
+	public ResponseEntity<List<MusicoInstrumentoDTO>> findAll() {
+		List<MusicoInstrumentoDTO> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<MusicoDaBandaDTO> findById(@PathVariable Long id){
-		MusicoDaBandaDTO dto = service.findById(id);
+	public ResponseEntity<MusicoInstrumentoDTO> findById(@PathVariable Long id){
+		MusicoInstrumentoDTO dto = service.findById(id);
 		return ResponseEntity.ok().body(dto);
 	}
 	
 	@PostMapping
-	public ResponseEntity<MusicoDaBandaDTO> insert(@RequestBody MusicoDaBandaDTO dto){
+	public ResponseEntity<MusicoInstrumentoDTO> insert(@RequestBody MusicoInstrumentoDTO dto){
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder
 					.fromCurrentRequest()
@@ -49,9 +49,9 @@ public class MusicoDaBandaResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<MusicoDaBandaDTO> update(
+	public ResponseEntity<MusicoInstrumentoDTO> update(
 			@PathVariable Long id,
-			@RequestBody MusicoDaBandaDTO dto){
+			@RequestBody MusicoInstrumentoDTO dto){
 		dto = service.update(id, dto);
 		return ResponseEntity.ok().body(dto);
 	}

@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 import br.com.music.entities.Instrumento;
 import br.com.music.entities.Musico;
-import br.com.music.entities.MusicoDaBanda;
+import br.com.music.entities.MusicoInstrumento;
 
-public class MusicoDaBandaDTO implements Serializable {
+public class MusicoInstrumentoDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -15,12 +15,12 @@ public class MusicoDaBandaDTO implements Serializable {
 	private Instrumento instrumento;
 	
 	
-	public MusicoDaBandaDTO() {
+	public MusicoInstrumentoDTO() {
 		
 	}
 
 
-	public MusicoDaBandaDTO(Long id, Musico musico, Instrumento instrumento) {
+	public MusicoInstrumentoDTO(Long id, Musico musico, Instrumento instrumento) {
 		
 		this.id = id;
 		this.musico = musico;
@@ -28,7 +28,7 @@ public class MusicoDaBandaDTO implements Serializable {
 	}
 	
 	
-	public MusicoDaBandaDTO(MusicoDaBanda entity) {
+	public MusicoInstrumentoDTO(MusicoInstrumento entity) {
 		this.id = entity.getId();
 		this.musico = entity.getMusico();
 		this.instrumento = entity.getInstrumento();

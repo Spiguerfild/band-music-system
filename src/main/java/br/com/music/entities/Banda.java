@@ -30,8 +30,8 @@ public class Banda implements Serializable{
 	@ManyToMany
 	@JoinTable(name = "tb_musicoinstrumentobanda",
 	joinColumns = @JoinColumn(name = "banda_id"),
-	inverseJoinColumns = @JoinColumn(name = "musico_da_banda_id"))
-	Set<MusicoDaBanda> musicos = new HashSet<>();
+	inverseJoinColumns = @JoinColumn(name = "musico_instrumento_id"))
+	Set<MusicoInstrumento> musicos = new HashSet<>();
 	
 	public Banda() {
 		

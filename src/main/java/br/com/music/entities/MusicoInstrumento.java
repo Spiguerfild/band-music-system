@@ -12,8 +12,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_musicodabanda")
-public class MusicoDaBanda implements Serializable {
+@Table(name = "tb_musicoinstrumento")
+public class MusicoInstrumento implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -27,11 +27,11 @@ public class MusicoDaBanda implements Serializable {
 	@JoinColumn(name = "id_instrumento_fk")
 	private Instrumento instrumento;
 
-	public MusicoDaBanda() {
+	public MusicoInstrumento() {
 		
 	}
 
-	public MusicoDaBanda(Long id, Musico musico, Instrumento instrumento) {
+	public MusicoInstrumento(Long id, Musico musico, Instrumento instrumento) {
 
 		this.id = id;
 		this.musico = musico;
@@ -75,7 +75,7 @@ public class MusicoDaBanda implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MusicoDaBanda other = (MusicoDaBanda) obj;
+		MusicoInstrumento other = (MusicoInstrumento) obj;
 		return Objects.equals(id, other.id);
 	}
 
