@@ -2,13 +2,17 @@ package br.com.music.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -25,6 +29,12 @@ public class NoiteDeApresentacao implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "id_banda_fk")
 	private Banda banda;
+	
+	@ManyToMany
+	@JoinTable(name = "tb_musicasdanoitedeapresentacao",
+	joinColumns = @JoinColumn(name = "noite_apresentacao_id"),
+	inverseJoinColumns = @JoinColumn(name = "musica_id"))
+	Set<MusicoInstrumento> musicos = new HashSet<>();
 	
 	
 	public NoiteDeApresentacao() {
