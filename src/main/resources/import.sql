@@ -20,6 +20,8 @@ INSERT INTO TB_BANDA (nome) VALUES ('Peterson');
 INSERT INTO TB_MUSICOINSTRUMENTO(id_musico_fk, id_instrumento_fk) VALUES (1, 2);
 INSERT INTO TB_MUSICOINSTRUMENTO (id_musico_fk, id_instrumento_fk) VALUES (2, 6);
 INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-08-25', 1);
+INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-08-28', 2);
+INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-09-01', 3);
 INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (1, 1);
 INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (2, 1);
 INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (1, 3);
