@@ -24,6 +24,8 @@ public class BandaResource {
 	
 	@Autowired
 	private BandaService service;
+	
+	//CRUD----------------------------------------------------
 
 	@GetMapping
 	public ResponseEntity<List<BandaDTO>> findAll() {
@@ -54,5 +56,14 @@ public class BandaResource {
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	//consulta personalizada----------------------------------------------------
+	
+	@GetMapping(value = "/nomebanda/{nome}")
+	public ResponseEntity<BandaDTO> findByBanda(
+	@PathVariable String nome){
+	BandaDTO dto = service.findByBanda(nome);
+	return ResponseEntity.ok().body(dto);
 	}
 }

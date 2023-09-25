@@ -21,6 +21,7 @@ public class BandaService {
 	@Autowired
 	private BandaRepository repository;
 
+	// CREATE | READ | UPDATE | DELETE---------------------------------------------------------
 	@Transactional(readOnly = true)
 	public List<BandaDTO> findAll(){
 		List<Banda> lista = repository.findAll();
@@ -73,4 +74,14 @@ public class BandaService {
 			throw new ResourceNotFoundException("O registro solicitado não foi localizado.");
 		}
 	}
+	
+	// consultas personalizadas a baixo ---------------------------------------------------------
+	
+	// consulta por nome da banda
+	@Transactional(readOnly = true)
+	public BandaDTO findByBanda(String numeroSerie){
+	Banda obj = repository.findByNome(numeroSerie);
+	return new BandaDTO(obj);
+	}
+
 }

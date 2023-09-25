@@ -7,4 +7,6 @@ import br.com.music.entities.Banda;
 
 public interface BandaRepository extends JpaRepository<Banda, Long>{
 
+	Banda findByNome(String nome);
+
 }
