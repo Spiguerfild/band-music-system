@@ -34,7 +34,7 @@ public class NoiteDeApresentacao implements Serializable {
 	@JoinTable(name = "tb_musicasdanoitedeapresentacao",
 	joinColumns = @JoinColumn(name = "noite_apresentacao_id"),
 	inverseJoinColumns = @JoinColumn(name = "musica_id"))
-	Set<MusicoInstrumento> musicos = new HashSet<>();
+	Set<Musica> musicas = new HashSet<>();
 	
 	
 	public NoiteDeApresentacao() {

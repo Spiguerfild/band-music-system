@@ -19,7 +19,7 @@ import br.com.music.dto.MusicoInstrumentoDTO;
 import br.com.music.services.MusicoInstrumentoService;
 
 @RestController
-@RequestMapping(value = "/musicosdasbandas")
+@RequestMapping(value = "/musicosinstrumentos")
 public class MusicoInstrumentoResource {
 	
 	@Autowired
