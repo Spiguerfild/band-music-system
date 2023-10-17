@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,6 +28,7 @@ public class Banda implements Serializable{
 	private Long id;
 	private String nome;
 	
+//	@ManyToMany(fetch = FetchType.EAGER)
 	@ManyToMany
 	@JoinTable(name = "tb_musicoinstrumentobanda",
 	joinColumns = @JoinColumn(name = "banda_id"),
