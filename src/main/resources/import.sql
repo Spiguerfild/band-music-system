@@ -17,19 +17,23 @@ INSERT INTO TB_BANDA (nome) VALUES ('Cassiano');
 INSERT INTO TB_BANDA (nome) VALUES ('Caio');
 INSERT INTO TB_BANDA (nome) VALUES ('Cícero');
 INSERT INTO TB_BANDA (nome) VALUES ('Peterson');
+
 INSERT INTO TB_MUSICOINSTRUMENTO(id_musico_fk, id_instrumento_fk) VALUES (1, 2);
 INSERT INTO TB_MUSICOINSTRUMENTO (id_musico_fk, id_instrumento_fk) VALUES (2, 6);
+INSERT INTO TB_MUSICOINSTRUMENTO (id_musico_fk, id_instrumento_fk) VALUES (3, 3);
+INSERT INTO TB_MUSICOINSTRUMENTO (id_musico_fk, id_instrumento_fk) VALUES (4, 4);
+INSERT INTO TB_MUSICOINSTRUMENTO (id_musico_fk, id_instrumento_fk) VALUES (5, 5);
+INSERT INTO TB_MUSICOINSTRUMENTO (id_musico_fk, id_instrumento_fk) VALUES (6, 1);
+
 INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-08-25', 1);
 INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-08-26', 2);
 INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-08-27', 3);
-INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-09-01', 4);
-INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-08-03', 3);
-INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-08-04', 2);
-INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-09-05', 1);
+
 INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (1, 1);
 INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (2, 1);
-INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (1, 3);
-INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (2, 3);
+INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (3, 1);
+INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (4, 1);
+INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (5, 1);
 
-INSERT INTO TB_musicasdanoitedeapresentacao (noite_apresentacao_id,musica_id) VALUES (2, 2);
-INSERT INTO TB_musicasdanoitedeapresentacao (noite_apresentacao_id,musica_id) VALUES (2, 1);
+INSERT INTO TB_musicasdanoitedeapresentacao (noite_apresentacao_id,musica_id) VALUES (1, 2);
+INSERT INTO TB_musicasdanoitedeapresentacao (noite_apresentacao_id,musica_id) VALUES (1, 1);
