@@ -21,11 +21,11 @@ INSERT INTO TB_BANDA (nome) VALUES ('Peterson');
 INSERT INTO TB_MUSICOINSTRUMENTO(id_musico_fk, id_instrumento_fk) VALUES (1, 2);
 INSERT INTO TB_MUSICOINSTRUMENTO (id_musico_fk, id_instrumento_fk) VALUES (2, 6);
 INSERT INTO TB_MUSICOINSTRUMENTO (id_musico_fk, id_instrumento_fk) VALUES (3, 3);
-INSERT INTO TB_MUSICOINSTRUMENTO (id_musico_fk, id_instrumento_fk) VALUES (4, 4);
+INSERT INTO TB_MUSICOINSTRUMENTO (id_musico_fk, id_instrumento_fk) VALUES (4, 1);
 INSERT INTO TB_MUSICOINSTRUMENTO (id_musico_fk, id_instrumento_fk) VALUES (5, 5);
-INSERT INTO TB_MUSICOINSTRUMENTO (id_musico_fk, id_instrumento_fk) VALUES (6, 1);
+INSERT INTO TB_MUSICOINSTRUMENTO (id_musico_fk, id_instrumento_fk) VALUES (6, 4);
 
-INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-08-25', 1);
+INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-08-23', 1);
 INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-08-26', 2);
 INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-08-27', 3);
 
