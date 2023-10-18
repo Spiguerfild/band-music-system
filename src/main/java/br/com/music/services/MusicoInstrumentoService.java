@@ -36,19 +36,35 @@ public class MusicoInstrumentoService {
 		return new MusicoInstrumentoDTO(entity);		
 	}
 
+//	@Transactional
+//	public MusicoInstrumentoDTO insert(MusicoInstrumentoDTO dto) {
+//		MusicoInstrumento entity = new MusicoInstrumento();
+//		
+//		entity.setInstrumento(dto.getInstrumento());
+//		entity.setMusico(dto.getMusico());
+//		
+//	
+//		
+//		entity = repository.save(entity);
+//
+//		return new MusicoInstrumentoDTO(entity);
+//	}
 	@Transactional
 	public MusicoInstrumentoDTO insert(MusicoInstrumentoDTO dto) {
-		MusicoInstrumento entity = new MusicoInstrumento();
-		
-		entity.setInstrumento(dto.getInstrumento());
-		entity.setMusico(dto.getMusico());
-		
-	
-		
-		entity = repository.save(entity);
+	    // Verifique se já existe um registro com a mesma combinação de músico e instrumento
+	    if (repository.existsByMusicoAndInstrumento(dto.getMusico(), dto.getInstrumento())) {
+	        throw new ResourceNotFoundException("Registro já existe, este músico já toca este instrumento.");
+	    }
 
-		return new MusicoInstrumentoDTO(entity);
+	    MusicoInstrumento entity = new MusicoInstrumento();
+	    entity.setInstrumento(dto.getInstrumento());
+	    entity.setMusico(dto.getMusico());
+
+	    entity = repository.save(entity);
+
+	    return new MusicoInstrumentoDTO(entity);
 	}
+
 
 	@Transactional
 	public MusicoInstrumentoDTO update(Long id, MusicoInstrumentoDTO dto) {

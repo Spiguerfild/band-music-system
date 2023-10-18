@@ -13,7 +13,8 @@ import jakarta.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class ResourceExceptionHandler {
 	
-	@ExceptionHandler(ResourceNotFoundException.class)
+	@ExceptionHandler(ResourceNotFoundException.class )
+
 	public ResponseEntity<StandartError> entityNotFound(ResourceNotFoundException e, HttpServletRequest request){
 		//Instanciamos uma mensagem de erro com base no padrão que criamos
 		StandartError error = new StandartError();
