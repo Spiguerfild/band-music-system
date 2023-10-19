@@ -68,7 +68,11 @@ public class MusicoInstrumentoService {
 
 	@Transactional
 	public MusicoInstrumentoDTO update(Long id, MusicoInstrumentoDTO dto) {
-		
+		 // Verifique se já existe um registro com a mesma combinação de músico e instrumento
+	    if (repository.existsByMusicoAndInstrumento(dto.getMusico(), dto.getInstrumento())) {
+	        throw new ResourceNotFoundException("Registro já existe, este músico já toca este instrumento.");
+	    }
+	    
 		try {
 			MusicoInstrumento entity = repository.getReferenceById(id);
 			
