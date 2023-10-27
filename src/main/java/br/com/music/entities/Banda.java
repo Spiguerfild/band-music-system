@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import org.hibernate.annotations.CascadeType;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -29,11 +31,11 @@ public class Banda implements Serializable{
 	private String nome;
 	
 //	@ManyToMany(fetch = FetchType.EAGER)
-	@ManyToMany
+	@ManyToMany(cascade = {jakarta.persistence.CascadeType.ALL})
 	@JoinTable(name = "tb_musicoinstrumentobanda",
 	joinColumns = @JoinColumn(name = "banda_id"),
 	inverseJoinColumns = @JoinColumn(name = "musico_instrumento_id"))
-	Set<MusicoInstrumento> musicos = new HashSet<>();
+	Set<MusicoInstrumento> musicosInstrumentos;
 	
 	public Banda() {
 		
@@ -59,6 +61,13 @@ public class Banda implements Serializable{
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	
+	public void add(MusicoInstrumento musicoinstrumento) {
+		if(musicosInstrumentos == null) {
+			musicosInstrumentos = new HashSet<>();
+		}
+		musicosInstrumentos.add(musicoinstrumento);
 	}
 
 	@Override

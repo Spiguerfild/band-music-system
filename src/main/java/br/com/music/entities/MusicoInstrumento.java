@@ -2,12 +2,14 @@ package br.com.music.entities;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -26,6 +28,9 @@ public class MusicoInstrumento implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "id_instrumento_fk")
 	private Instrumento instrumento;
+	
+	@ManyToMany(mappedBy = "musicosInstrumentos")
+	private Set<Banda> bandas;
 
 	public MusicoInstrumento() {
 		

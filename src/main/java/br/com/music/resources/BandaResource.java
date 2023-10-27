@@ -25,6 +25,19 @@ public class BandaResource {
 	@Autowired
 	private BandaService service;
 	
+	
+	@PostMapping("/{musicoInstrumentoId}/nabanda/{bandaId}")
+	public ResponseEntity<?> associarMusicoABanda(@PathVariable Long musicoInstrumentoId, @PathVariable Long bandaId) {
+	    service.associarMusicoABanda(musicoInstrumentoId, bandaId);
+	    return ResponseEntity.ok("Associação realizada com sucesso");
+	}
+	
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Void> deleteMusicoInstrumentoDaBanda(@PathVariable Long id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();
+	}
+	
 	//CRUD----------------------------------------------------
 
 	@GetMapping
