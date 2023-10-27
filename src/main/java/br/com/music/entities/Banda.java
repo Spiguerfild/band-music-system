@@ -17,32 +17,28 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
-
 @Entity
 @Table(name = "tb_banda")
-public class Banda implements Serializable{
+public class Banda implements Serializable {
 
-	
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
-	
+
 //	@ManyToMany(fetch = FetchType.EAGER)
-	@ManyToMany(cascade = {jakarta.persistence.CascadeType.ALL})
-	@JoinTable(name = "tb_musicoinstrumentobanda",
-	joinColumns = @JoinColumn(name = "banda_id"),
-	inverseJoinColumns = @JoinColumn(name = "musico_instrumento_id"))
+	@ManyToMany(cascade = { jakarta.persistence.CascadeType.ALL })
+	@JoinTable(name = "tb_musicoinstrumentobanda", joinColumns = @JoinColumn(name = "banda_id"), inverseJoinColumns = @JoinColumn(name = "musico_instrumento_id"))
 	Set<MusicoInstrumento> musicosInstrumentos;
-	
+
 	public Banda() {
-		
+
 	}
 
 	public Banda(Long id, String nome) {
-		
+
 		this.id = id;
 		this.nome = nome;
 	}
@@ -63,12 +59,17 @@ public class Banda implements Serializable{
 		this.nome = nome;
 	}
 	
+	
+	   
+
 	public void add(MusicoInstrumento musicoinstrumento) {
-		if(musicosInstrumentos == null) {
+		if (musicosInstrumentos == null) {
 			musicosInstrumentos = new HashSet<>();
 		}
 		musicosInstrumentos.add(musicoinstrumento);
 	}
+
+
 
 	@Override
 	public int hashCode() {
@@ -86,7 +87,5 @@ public class Banda implements Serializable{
 		Banda other = (Banda) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
-	
+
 }

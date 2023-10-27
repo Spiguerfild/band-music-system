@@ -30,13 +30,25 @@ public class BandaService {
 	@Transactional
 	public void associarMusicoABanda(Long musicoInstrumentoId, Long bandaId) {
 
-		Banda banda = repository.findById(bandaId).orElseThrow(()-> new ResourceNotFoundException("Banda não encontrada"));
+		Banda banda = repository.findById(bandaId)
+				.orElseThrow(() -> new ResourceNotFoundException("Banda não encontrada"));
 		MusicoInstrumento musicoInstrumento = musicoInstrumentoRepository.findById(musicoInstrumentoId)
-				.orElseThrow(()-> new ResourceNotFoundException("Musico-Instrumento não encontrado"));
+				.orElseThrow(() -> new ResourceNotFoundException("Musico-Instrumento não encontrado"));
 
-	banda.add(musicoInstrumento);
-	repository.save(banda);
+		banda.add(musicoInstrumento);
+		repository.save(banda);
 	}
+
+	public void deleteMusicoInstrumentoDaBanda(Long musicoInstrumentoId, Long bandaId) {
+		  
+		try {
+			if (repository.existsById(musicoInstrumentoId)) {
+				repository.deleteById(musicoInstrumentoId);
+			}
+		} catch (EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException("O registro solicitado não foi localizado.");
+		}
+	    }
 
 	// CREATE | READ | UPDATE |
 	// DELETE---------------------------------------------------------

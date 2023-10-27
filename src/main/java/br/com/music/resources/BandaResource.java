@@ -32,11 +32,11 @@ public class BandaResource {
 	    return ResponseEntity.ok("Associação realizada com sucesso");
 	}
 	
-	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> deleteMusicoInstrumentoDaBanda(@PathVariable Long id) {
-		service.delete(id);
-		return ResponseEntity.noContent().build();
-	}
+//	@DeleteMapping(value = "/musicoinstrumentoNaBanda/{musicoInstrumentoId}/{bandaId}")
+//	public ResponseEntity<Void> deleteMusicoInstrumentoDaBanda(@PathVariable Long musicoInstrumentoId,@PathVariable Long bandaId) {
+//		service.deleteMusicoInstrumentoDaBanda(musicoInstrumentoId, bandaId);
+//		return ResponseEntity.noContent().build();
+//	}
 	
 	//CRUD----------------------------------------------------
 
