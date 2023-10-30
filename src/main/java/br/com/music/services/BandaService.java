@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import br.com.music.dto.BandaDTO;
+import br.com.music.dto.MusicoInstrumentoBandaDTO;
 import br.com.music.entities.Banda;
 import br.com.music.entities.MusicoInstrumento;
 import br.com.music.repositories.BandaRepository;
@@ -50,6 +51,9 @@ public class BandaService {
 		}
 	    }
 
+	
+	
+	
 	// CREATE | READ | UPDATE |
 	// DELETE---------------------------------------------------------
 	@Transactional(readOnly = true)

@@ -1,7 +1,9 @@
 package br.com.music.resources;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.music.dto.BandaDTO;
+import br.com.music.entities.Banda;
+import br.com.music.entities.MusicoInstrumento;
+import br.com.music.repositories.BandaRepository;
 import br.com.music.services.BandaService;
+import br.com.music.services.exceptions.ResourceNotFoundException;
 
 @RestController
 @RequestMapping(value = "/bandas")
@@ -25,6 +31,8 @@ public class BandaResource {
 	@Autowired
 	private BandaService service;
 	
+	@Autowired
+	private BandaRepository repository;
 	
 	@PostMapping("/{musicoInstrumentoId}/nabanda/{bandaId}")
 	public ResponseEntity<?> associarMusicoABanda(@PathVariable Long musicoInstrumentoId, @PathVariable Long bandaId) {
@@ -38,6 +46,16 @@ public class BandaResource {
 //		return ResponseEntity.noContent().build();
 //	}
 	
+	@GetMapping("/{bandaId}/musicosinstrumentos")
+	public ResponseEntity<List<MusicoInstrumento>> getMusicosDaBanda(@PathVariable Long bandaId) {
+	    Banda banda = repository.findById(bandaId)
+	            .orElseThrow(() -> new ResourceNotFoundException("Banda não encontrada"));
+
+	    Set<MusicoInstrumento> musicosDaBanda = banda.getMusicosInstrumentos();
+
+	    return ResponseEntity.ok(new ArrayList<>(musicosDaBanda));
+	}
+
 	//CRUD----------------------------------------------------
 
 	@GetMapping

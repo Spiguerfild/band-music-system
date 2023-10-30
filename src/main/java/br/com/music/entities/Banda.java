@@ -28,9 +28,10 @@ public class Banda implements Serializable {
 	private Long id;
 	private String nome;
 
-//	@ManyToMany(fetch = FetchType.EAGER)
-	@ManyToMany(cascade = { jakarta.persistence.CascadeType.ALL })
-	@JoinTable(name = "tb_musicoinstrumentobanda", joinColumns = @JoinColumn(name = "banda_id"), inverseJoinColumns = @JoinColumn(name = "musico_instrumento_id"))
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { jakarta.persistence.CascadeType.ALL })
+	@JoinTable(name = "tb_musicoinstrumentobanda", 
+	joinColumns = @JoinColumn(name = "banda_id"),
+	inverseJoinColumns = @JoinColumn(name = "musico_instrumento_id"))
 	Set<MusicoInstrumento> musicosInstrumentos;
 
 	public Banda() {
@@ -58,9 +59,6 @@ public class Banda implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	
-	   
 
 	public void add(MusicoInstrumento musicoinstrumento) {
 		if (musicosInstrumentos == null) {
@@ -69,7 +67,10 @@ public class Banda implements Serializable {
 		musicosInstrumentos.add(musicoinstrumento);
 	}
 
+	public Set<MusicoInstrumento> getMusicosInstrumentos() {
 
+		return musicosInstrumentos;
+	}
 
 	@Override
 	public int hashCode() {
