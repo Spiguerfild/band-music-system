@@ -66,6 +66,13 @@ public class Banda implements Serializable {
 		}
 		musicosInstrumentos.add(musicoinstrumento);
 	}
+	
+	public void del(MusicoInstrumento musicoinstrumento) {
+	    if (musicosInstrumentos != null) {
+	        musicosInstrumentos.remove(musicoinstrumento);
+	    }
+	}
+
 
 	public Set<MusicoInstrumento> getMusicosInstrumentos() {
 

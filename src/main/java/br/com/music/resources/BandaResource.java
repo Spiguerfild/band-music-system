@@ -34,18 +34,6 @@ public class BandaResource {
 	@Autowired
 	private BandaRepository repository;
 	
-	@PostMapping("/{musicoInstrumentoId}/nabanda/{bandaId}")
-	public ResponseEntity<?> associarMusicoABanda(@PathVariable Long musicoInstrumentoId, @PathVariable Long bandaId) {
-	    service.associarMusicoABanda(musicoInstrumentoId, bandaId);
-	    return ResponseEntity.ok("Associação realizada com sucesso");
-	}
-	
-//	@DeleteMapping(value = "/musicoinstrumentoNaBanda/{musicoInstrumentoId}/{bandaId}")
-//	public ResponseEntity<Void> deleteMusicoInstrumentoDaBanda(@PathVariable Long musicoInstrumentoId,@PathVariable Long bandaId) {
-//		service.deleteMusicoInstrumentoDaBanda(musicoInstrumentoId, bandaId);
-//		return ResponseEntity.noContent().build();
-//	}
-	
 	@GetMapping("/{bandaId}/musicosinstrumentos")
 	public ResponseEntity<List<MusicoInstrumento>> getMusicosDaBanda(@PathVariable Long bandaId) {
 	    Banda banda = repository.findById(bandaId)
@@ -56,6 +44,20 @@ public class BandaResource {
 	    return ResponseEntity.ok(new ArrayList<>(musicosDaBanda));
 	}
 
+	
+	@PostMapping("/{musicoInstrumentoId}/nabanda/{bandaId}")
+	public ResponseEntity<?> associarMusicoABanda(@PathVariable Long musicoInstrumentoId, @PathVariable Long bandaId) {
+	    service.associarMusicoABanda(musicoInstrumentoId, bandaId);
+	    return ResponseEntity.ok("Associação realizada com sucesso");
+	}
+	
+	@DeleteMapping(value = "/musicoinstrumentoNaBanda/{musicoInstrumentoId}/{bandaId}")
+	public ResponseEntity<Void> deleteMusicoInstrumentoDaBanda(@PathVariable Long musicoInstrumentoId,@PathVariable Long bandaId) {
+		service.deleteMusicoInstrumentoDaBanda(musicoInstrumentoId, bandaId);
+		return ResponseEntity.noContent().build();
+	}
+	
+	
 	//CRUD----------------------------------------------------
 
 	@GetMapping
