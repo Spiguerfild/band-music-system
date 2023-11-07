@@ -80,6 +80,23 @@ public class NoiteDeApresentacao implements Serializable {
 		this.banda = banda;
 	}
 
+	public void add(Musica musica) {
+		if (musicas == null) {
+			musicas = new HashSet<>();
+		}
+		musicas.add(musica);
+	}
+	
+	public void del(Musica musica) {
+	    if (musicas != null) {
+	    	musicas.remove(musica);
+	    }
+	}
+
+
+	public Set<Musica> getMusicosInstrumentos() {
+		return musicas;
+	}
 
 	@Override
 	public int hashCode() {

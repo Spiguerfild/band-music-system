@@ -1,17 +1,19 @@
 package br.com.music.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import br.com.music.dto.BandaDTO;
-import br.com.music.dto.MusicoInstrumentoBandaDTO;
 import br.com.music.entities.Banda;
 import br.com.music.entities.MusicoInstrumento;
 import br.com.music.repositories.BandaRepository;
@@ -27,6 +29,18 @@ public class BandaService {
 
 	@Autowired
 	private MusicoInstrumentoRepository musicoInstrumentoRepository;
+	
+	
+	@Transactional(readOnly = true)
+	public List<MusicoInstrumento> findAllMusicosInstrumentos(@PathVariable Long bandaId) {
+	    Banda banda = repository.findById(bandaId)
+	            .orElseThrow(() -> new ResourceNotFoundException("Banda não encontrada"));
+
+	    Set<MusicoInstrumento> musicosDaBanda = banda.getMusicosInstrumentos();
+
+	    return new ArrayList<>(musicosDaBanda);
+	}
+
 
 	@Transactional
 	public void associarMusicoABanda(Long musicoInstrumentoId, Long bandaId) {
