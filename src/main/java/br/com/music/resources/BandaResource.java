@@ -31,8 +31,7 @@ public class BandaResource {
 	@Autowired
 	private BandaService service;
 	
-	@Autowired
-	private BandaRepository repository;
+
 	
 //	@GetMapping("/{bandaId}/musicosinstrumentos")
 //	public ResponseEntity<List<MusicoInstrumento>> getMusicosDaBanda(@PathVariable Long bandaId) {

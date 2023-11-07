@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.music.dto.NoiteDeApresentacaoDTO;
+import br.com.music.entities.Musica;
+import br.com.music.entities.MusicoInstrumento;
 import br.com.music.services.NoiteDeApresentacaoService;
 
 @RestController
@@ -24,6 +26,29 @@ public class NoiteDeApresentacaoResource {
 
 	@Autowired
 	private NoiteDeApresentacaoService service;
+	
+	
+	
+	@GetMapping("/{noiteId}/musicas")
+	public ResponseEntity<List<Musica>> getMusicasDaNoite(@PathVariable Long noiteId) {
+	    List<Musica> list = service.findAllMusicasDaNoite(noiteId);
+
+	    return ResponseEntity.ok().body(list);
+	}
+
+	
+	@PostMapping("/{musicaId}/nanoite/{noiteId}")
+	public ResponseEntity<?> associarMusicaANoite(@PathVariable Long musicaId, @PathVariable Long noiteId) {
+	    service.associarMusicaANoite(musicaId, noiteId);
+	    return ResponseEntity.ok("Associação realizada com sucesso");
+	}
+	
+	@DeleteMapping(value = "/musicaNaNoite/{musicaId}/{noiteId}")
+	public ResponseEntity<Void> deleteMusicaDaNoite(@PathVariable Long musicaId,@PathVariable Long noiteId) {
+		service.deleteMusicaDaNoite(musicaId, noiteId);
+		return ResponseEntity.noContent().build();
+	}
+	////////////////////////////////////////////////////////////////////////////////////
 	
 	@GetMapping
 	public ResponseEntity<List<NoiteDeApresentacaoDTO>> findAll() {

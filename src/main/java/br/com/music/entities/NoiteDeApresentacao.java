@@ -94,7 +94,7 @@ public class NoiteDeApresentacao implements Serializable {
 	}
 
 
-	public Set<Musica> getMusicosInstrumentos() {
+	public Set<Musica> getMusicas() {
 		return musicas;
 	}
 

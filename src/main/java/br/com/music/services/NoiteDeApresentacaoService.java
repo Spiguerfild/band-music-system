@@ -1,16 +1,23 @@
 package br.com.music.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import br.com.music.dto.NoiteDeApresentacaoDTO;
+import br.com.music.entities.Banda;
+import br.com.music.entities.Musica;
+import br.com.music.entities.MusicoInstrumento;
 import br.com.music.entities.NoiteDeApresentacao;
+import br.com.music.repositories.MusicaRepository;
 import br.com.music.repositories.NoiteDeApresentacaoRepository;
 import br.com.music.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
@@ -21,6 +28,48 @@ public class NoiteDeApresentacaoService {
 	@Autowired
 	private NoiteDeApresentacaoRepository repository;
 
+	@Autowired
+	private MusicaRepository musicaRepository;
+
+	
+	@Transactional(readOnly = true) 
+	public List<Musica> findAllMusicasDaNoite(@PathVariable Long noiteId) {
+	    NoiteDeApresentacao noite = repository.findById(noiteId)
+	            .orElseThrow(() -> new ResourceNotFoundException("Noite de apresentação não encontrada"));
+
+	    Set<Musica> musicasDaNoite = noite.getMusicas();
+
+	    return new ArrayList<>(musicasDaNoite);
+	}
+
+
+	@Transactional
+	public void associarMusicaANoite(Long musicaId, Long noiteId) {
+
+		  NoiteDeApresentacao noite = repository.findById(noiteId)
+				.orElseThrow(() -> new ResourceNotFoundException("Noite de apresentação não encontrada"));
+		Musica musica = musicaRepository.findById(musicaId)
+				.orElseThrow(() -> new ResourceNotFoundException("Musica não encontrado"));
+
+		noite.add(musica);
+		repository.save(noite);
+	}
+
+	@Transactional
+	public void deleteMusicaDaNoite(Long musicaId, Long noiteId) {
+		
+		 NoiteDeApresentacao noite  = repository.findById(noiteId)
+				.orElseThrow(() -> new ResourceNotFoundException("Noite de apresentação não encontrada"));
+		 Musica musica = musicaRepository.findById(musicaId)
+				.orElseThrow(() -> new ResourceNotFoundException("Musica não encontrado"));
+		
+		noite.del(musica);
+		repository.save(noite);
+		
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////
+	
 	@Transactional(readOnly = true)
 	public List<NoiteDeApresentacaoDTO> findAll(){
 		List<NoiteDeApresentacao> lista = repository.findAll();
