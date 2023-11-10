@@ -54,6 +54,19 @@ INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-11-22', 1);
 INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-11-25', 4);
 INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-11-26', 1);
 INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-11-29', 2);
+INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-10-01', 4);
+INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-10-05', 2);
+INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-10-06', 1);
+INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-10-08', 3);
+INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-10-10', 1);
+INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-10-12', 3);
+INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-10-15', 2);
+INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-10-18', 3);
+INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-10-19', 4);
+INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-10-22', 1);
+INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-10-25', 4);
+INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-10-26', 1);
+INSERT INTO TB_NOITEDEAPRESENTACAO (data,id_banda_fk) VALUES ('2023-10-29', 2);
 
 INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (1, 1);
 INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (2, 1);
@@ -86,5 +99,17 @@ INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (6
 
 
 
-INSERT INTO TB_musicasdanoitedeapresentacao (noite_apresentacao_id,musica_id) VALUES (1, 2);
-INSERT INTO TB_musicasdanoitedeapresentacao (noite_apresentacao_id,musica_id) VALUES (1, 1);
+INSERT INTO TB_musicasdanoitedeapresentacao (noite_apresentacao_id,musica_id) VALUES (10, 2);
+INSERT INTO TB_musicasdanoitedeapresentacao (noite_apresentacao_id,musica_id) VALUES (10, 1); 
+INSERT INTO TB_musicasdanoitedeapresentacao (noite_apresentacao_id,musica_id) VALUES (9, 3); 
+INSERT INTO TB_musicasdanoitedeapresentacao (noite_apresentacao_id,musica_id) VALUES (8, 3); 
+INSERT INTO TB_musicasdanoitedeapresentacao (noite_apresentacao_id,musica_id) VALUES (12, 3); 
+INSERT INTO TB_musicasdanoitedeapresentacao (noite_apresentacao_id, musica_id) VALUES (11, 2);
+INSERT INTO TB_musicasdanoitedeapresentacao (noite_apresentacao_id, musica_id) VALUES (9, 1);
+INSERT INTO TB_musicasdanoitedeapresentacao (noite_apresentacao_id, musica_id) VALUES (8, 2);
+INSERT INTO TB_musicasdanoitedeapresentacao (noite_apresentacao_id, musica_id) VALUES (12, 1);
+INSERT INTO TB_musicasdanoitedeapresentacao (noite_apresentacao_id, musica_id) VALUES (6, 3);
+INSERT INTO TB_musicasdanoitedeapresentacao (noite_apresentacao_id, musica_id) VALUES (6, 2);
+INSERT INTO TB_musicasdanoitedeapresentacao (noite_apresentacao_id, musica_id) VALUES (5, 1);
+INSERT INTO TB_musicasdanoitedeapresentacao (noite_apresentacao_id, musica_id) VALUES (4, 3);
+INSERT INTO TB_musicasdanoitedeapresentacao (noite_apresentacao_id, musica_id) VALUES (3, 1);
