@@ -31,7 +31,7 @@ public class NoiteDeApresentacaoService {
 	@Autowired
 	private MusicaRepository musicaRepository;
 
-	
+	//noite de apresentação associando musicas  
 	@Transactional(readOnly = true) 
 	public List<Musica> findAllMusicasDaNoite(@PathVariable Long noiteId) {
 	    NoiteDeApresentacao noite = repository.findById(noiteId)
@@ -68,7 +68,7 @@ public class NoiteDeApresentacaoService {
 		
 	}
 	
-	////////////////////////////////////////////////////////////////////////////////////
+	//noite de apresentação crud
 	
 	@Transactional(readOnly = true)
 	public List<NoiteDeApresentacaoDTO> findAll(){
