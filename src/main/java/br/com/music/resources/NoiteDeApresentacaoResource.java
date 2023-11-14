@@ -28,7 +28,7 @@ public class NoiteDeApresentacaoResource {
 	private NoiteDeApresentacaoService service;
 	
 	
-	
+	//  Relação da noite de apresentação com as musicas da noite
 	@GetMapping("/{noiteId}/musicas")
 	public ResponseEntity<List<Musica>> getMusicasDaNoite(@PathVariable Long noiteId) {
 	    List<Musica> list = service.findAllMusicasDaNoite(noiteId);
@@ -48,7 +48,7 @@ public class NoiteDeApresentacaoResource {
 		service.deleteMusicaDaNoite(musicaId, noiteId);
 		return ResponseEntity.noContent().build();
 	}
-	////////////////////////////////////////////////////////////////////////////////////
+	// CRUD Referente a Noite de apresentação(escala)
 	
 	@GetMapping
 	public ResponseEntity<List<NoiteDeApresentacaoDTO>> findAll() {
