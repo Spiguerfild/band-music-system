@@ -76,23 +76,23 @@ INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (5
 INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (6, 1);
 
 
--- INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (7, 2);
--- INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (1, 2);
--- INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (8, 2);
--- INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (6, 2);
+INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (7, 2);
+INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (1, 2);
+INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (8, 2);
+INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (6, 2);
 
--- INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (9, 3);
--- INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (7, 3);
--- INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (1, 3);
--- INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (8, 3);
--- INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (6, 3);
+INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (9, 3);
+INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (7, 3);
+INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (1, 3);
+INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (8, 3);
+INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (6, 3);
 
--- INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (10, 4);
--- INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (11, 4);
--- INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (7, 4);
--- INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (1, 4);
--- INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (8, 4);
--- INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (6, 4);
+INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (10, 4);
+INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (11, 4);
+INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (7, 4);
+INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (1, 4);
+INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (8, 4);
+INSERT INTO TB_MUSICOINSTRUMENTOBANDA (musico_instrumento_id,banda_id) VALUES (6, 4);
 
 
 
