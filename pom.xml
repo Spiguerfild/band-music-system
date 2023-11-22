@@ -11,6 +11,7 @@
 	<groupId>br.com.music</groupId>
 	<artifactId>band-music-system</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>band-music-system</name>
 	<description>Projeto de gerenciamento de banda</description>
 	<properties>
@@ -44,6 +45,9 @@
 		
 	</dependencies>
 	<build>
+		<finalName>
+			band-music
+		</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
