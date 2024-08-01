@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>BandaServiceTests.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">band-music-system (6) (31 de jul. de 2024 22:22:57)</a> &gt; <a href="../../index.html" class="el_group">band-music-system</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">br.com.music.services</a> &gt; <span class="el_source">BandaServiceTests.java</span></div><h1>BandaServiceTests.java</h1><pre class="source lang-java linenums">package br.com.music.services;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import br.com.music.dto.BandaDTO;
+import br.com.music.entities.Banda;
+import br.com.music.entities.MusicoInstrumento;
+import br.com.music.repositories.BandaRepository;
+import br.com.music.repositories.MusicoInstrumentoRepository;
+
+<span class="fc" id="L29">public class BandaServiceTests {</span>
+
+    @InjectMocks
+    private BandaService bandaService;
+
+    @Mock
+    private BandaRepository bandaRepository;
+
+    @Mock
+    private MusicoInstrumentoRepository musicoInstrumentoRepository;
+
+    @BeforeEach
+    public void setUp() {
+<span class="fc" id="L42">        MockitoAnnotations.openMocks(this);</span>
+<span class="fc" id="L43">    }</span>
+
+    @Test
+    public void testFindAllMusicosInstrumentos() {
+<span class="fc" id="L47">        Long bandaId = 1L;</span>
+<span class="fc" id="L48">        Banda banda = mock(Banda.class);</span>
+<span class="fc" id="L49">        Set&lt;MusicoInstrumento&gt; musicosInstrumentos = new HashSet&lt;&gt;(); // Usar um conjunto real ao invés de um mock</span>
+
+<span class="fc" id="L51">        when(bandaRepository.findById(bandaId)).thenReturn(Optional.of(banda));</span>
+<span class="fc" id="L52">        when(banda.getMusicosInstrumentos()).thenReturn(musicosInstrumentos);</span>
+
+<span class="fc" id="L54">        List&lt;MusicoInstrumento&gt; result = bandaService.findAllMusicosInstrumentos(bandaId);</span>
+
+<span class="fc" id="L56">        assertNotNull(result);</span>
+<span class="fc" id="L57">        verify(bandaRepository).findById(bandaId);</span>
+<span class="fc" id="L58">        verify(banda).getMusicosInstrumentos();</span>
+<span class="fc" id="L59">    }</span>
+
+    @Test
+    public void testAssociarMusicoABanda() {
+<span class="fc" id="L63">        Long bandaId = 1L;</span>
+<span class="fc" id="L64">        Long musicoInstrumentoId = 1L;</span>
+<span class="fc" id="L65">        Banda banda = mock(Banda.class);</span>
+<span class="fc" id="L66">        MusicoInstrumento musicoInstrumento = mock(MusicoInstrumento.class);</span>
+
+<span class="fc" id="L68">        when(bandaRepository.findById(bandaId)).thenReturn(Optional.of(banda));</span>
+<span class="fc" id="L69">        when(musicoInstrumentoRepository.findById(musicoInstrumentoId)).thenReturn(Optional.of(musicoInstrumento));</span>
+
+<span class="fc" id="L71">        bandaService.associarMusicoABanda(musicoInstrumentoId, bandaId);</span>
+
+<span class="fc" id="L73">        verify(banda).add(musicoInstrumento);</span>
+<span class="fc" id="L74">        verify(bandaRepository).save(banda);</span>
+<span class="fc" id="L75">    }</span>
+
+    @Test
+    public void testDeleteMusicoInstrumentoDaBanda() {
+<span class="fc" id="L79">        Long bandaId = 1L;</span>
+<span class="fc" id="L80">        Long musicoInstrumentoId = 1L;</span>
+<span class="fc" id="L81">        Banda banda = mock(Banda.class);</span>
+<span class="fc" id="L82">        MusicoInstrumento musicoInstrumento = mock(MusicoInstrumento.class);</span>
+
+<span class="fc" id="L84">        when(bandaRepository.findById(bandaId)).thenReturn(Optional.of(banda));</span>
+<span class="fc" id="L85">        when(musicoInstrumentoRepository.findById(musicoInstrumentoId)).thenReturn(Optional.of(musicoInstrumento));</span>
+
+<span class="fc" id="L87">        bandaService.deleteMusicoInstrumentoDaBanda(musicoInstrumentoId, bandaId);</span>
+
+<span class="fc" id="L89">        verify(banda).del(musicoInstrumento);</span>
+<span class="fc" id="L90">        verify(bandaRepository).save(banda);</span>
+<span class="fc" id="L91">    }</span>
+
+    @Test
+    public void testFindAll() {
+<span class="fc" id="L95">        List&lt;Banda&gt; bandas = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L96">        when(bandaRepository.findAll()).thenReturn(bandas);</span>
+
+<span class="fc" id="L98">        List&lt;BandaDTO&gt; result = bandaService.findAll();</span>
+
+<span class="fc" id="L100">        assertNotNull(result);</span>
+<span class="fc" id="L101">        verify(bandaRepository).findAll();</span>
+<span class="fc" id="L102">    }</span>
+
+    @Test
+    public void testFindById() {
+<span class="fc" id="L106">        Long id = 1L;</span>
+<span class="fc" id="L107">        Banda banda = mock(Banda.class);</span>
+<span class="fc" id="L108">        when(bandaRepository.findById(id)).thenReturn(Optional.of(banda));</span>
+
+<span class="fc" id="L110">        BandaDTO result = bandaService.findById(id);</span>
+
+<span class="fc" id="L112">        assertNotNull(result);</span>
+<span class="fc" id="L113">        verify(bandaRepository).findById(id);</span>
+<span class="fc" id="L114">    }</span>
+
+    @Test
+    public void testInsert() {
+<span class="fc" id="L118">        BandaDTO dto = new BandaDTO();</span>
+<span class="fc" id="L119">        dto.setNome(&quot;Banda Teste&quot;);</span>
+<span class="fc" id="L120">        Banda banda = new Banda();</span>
+<span class="fc" id="L121">        banda.setNome(dto.getNome());</span>
+
+<span class="fc" id="L123">        when(bandaRepository.save(any(Banda.class))).thenReturn(banda);</span>
+
+<span class="fc" id="L125">        BandaDTO result = bandaService.insert(dto);</span>
+
+<span class="fc" id="L127">        assertNotNull(result);</span>
+<span class="fc" id="L128">        assertEquals(dto.getNome(), result.getNome());</span>
+<span class="fc" id="L129">        verify(bandaRepository).save(any(Banda.class));</span>
+<span class="fc" id="L130">    }</span>
+
+    @Test
+    public void testUpdate() {
+<span class="fc" id="L134">        Long id = 1L;</span>
+<span class="fc" id="L135">        BandaDTO dto = new BandaDTO();</span>
+<span class="fc" id="L136">        dto.setNome(&quot;Banda Atualizada&quot;);</span>
+<span class="fc" id="L137">        Banda banda = new Banda();</span>
+<span class="fc" id="L138">        banda.setNome(dto.getNome());</span>
+
+<span class="fc" id="L140">        when(bandaRepository.getReferenceById(id)).thenReturn(banda);</span>
+<span class="fc" id="L141">        when(bandaRepository.save(any(Banda.class))).thenReturn(banda);</span>
+
+<span class="fc" id="L143">        BandaDTO result = bandaService.update(id, dto);</span>
+
+<span class="fc" id="L145">        assertNotNull(result);</span>
+<span class="fc" id="L146">        assertEquals(dto.getNome(), result.getNome());</span>
+<span class="fc" id="L147">        verify(bandaRepository).getReferenceById(id);</span>
+<span class="fc" id="L148">        verify(bandaRepository).save(any(Banda.class));</span>
+<span class="fc" id="L149">    }</span>
+
+    @Test
+    public void testDelete() {
+<span class="fc" id="L153">        Long id = 1L;</span>
+
+<span class="fc" id="L155">        when(bandaRepository.existsById(id)).thenReturn(true);</span>
+<span class="fc" id="L156">        doNothing().when(bandaRepository).deleteById(id);</span>
+
+<span class="fc" id="L158">        bandaService.delete(id);</span>
+
+<span class="fc" id="L160">        verify(bandaRepository).deleteById(id);</span>
+<span class="fc" id="L161">    }</span>
+
+    @Test
+    public void testFindByBanda() {
+<span class="fc" id="L165">        String nome = &quot;Banda Teste&quot;;</span>
+<span class="fc" id="L166">        Banda banda = mock(Banda.class);</span>
+
+<span class="fc" id="L168">        when(bandaRepository.findByNome(nome)).thenReturn(banda);</span>
+
+<span class="fc" id="L170">        BandaDTO result = bandaService.findByBanda(nome);</span>
+
+<span class="fc" id="L172">        assertNotNull(result);</span>
+<span class="fc" id="L173">        verify(bandaRepository).findByNome(nome);</span>
+<span class="fc" id="L174">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span>band-music-system (6) (31 de jul. de 2024 22:22:57)</div></body></html>

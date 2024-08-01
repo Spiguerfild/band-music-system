@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>MusicoInstrumentoService.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">band-music-system (6) (31 de jul. de 2024 22:22:57)</a> &gt; <a href="../../index.html" class="el_group">band-music-system</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">br.com.music.services</a> &gt; <span class="el_source">MusicoInstrumentoService.java</span></div><h1>MusicoInstrumentoService.java</h1><pre class="source lang-java linenums">package br.com.music.services;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import br.com.music.dto.MusicoInstrumentoDTO;
+import br.com.music.entities.MusicoInstrumento;
+import br.com.music.repositories.MusicoInstrumentoRepository;
+import br.com.music.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
+
+
+@Service
+<span class="fc" id="L20">public class MusicoInstrumentoService {</span>
+
+	@Autowired
+	private MusicoInstrumentoRepository repository;
+
+	@Transactional(readOnly = true)
+	public List&lt;MusicoInstrumentoDTO&gt; findAll(){
+<span class="fc" id="L27">		List&lt;MusicoInstrumento&gt; lista = repository.findAll();</span>
+<span class="fc" id="L28">		return lista.stream().map(x -&gt; new MusicoInstrumentoDTO(x)).collect(Collectors.toList());</span>
+	}
+	
+	@Transactional(readOnly = true)
+	public MusicoInstrumentoDTO findById(Long id) {
+<span class="fc" id="L33">		Optional&lt;MusicoInstrumento&gt; obj = repository.findById(id);</span>
+		
+<span class="fc" id="L35">		MusicoInstrumento entity = obj.orElseThrow(() -&gt; new ResourceNotFoundException(&quot;O registro solicitado não foi localizado.&quot;));</span>
+<span class="fc" id="L36">		return new MusicoInstrumentoDTO(entity);		</span>
+	}
+
+//	@Transactional
+//	public MusicoInstrumentoDTO insert(MusicoInstrumentoDTO dto) {
+//		MusicoInstrumento entity = new MusicoInstrumento();
+//		
+//		entity.setInstrumento(dto.getInstrumento());
+//		entity.setMusico(dto.getMusico());
+//		
+//	
+//		
+//		entity = repository.save(entity);
+//
+//		return new MusicoInstrumentoDTO(entity);
+//	}
+	@Transactional
+	public MusicoInstrumentoDTO insert(MusicoInstrumentoDTO dto) {
+	    // Verifique se já existe um registro com a mesma combinação de músico e instrumento
+<span class="fc bfc" id="L55" title="All 2 branches covered.">	    if (repository.existsByMusicoAndInstrumento(dto.getMusico(), dto.getInstrumento())) {</span>
+<span class="fc" id="L56">	        throw new ResourceNotFoundException(&quot;Registro já existe, este músico já toca este instrumento.&quot;);</span>
+	    }
+
+<span class="fc" id="L59">	    MusicoInstrumento entity = new MusicoInstrumento();</span>
+<span class="fc" id="L60">	    entity.setInstrumento(dto.getInstrumento());</span>
+<span class="fc" id="L61">	    entity.setMusico(dto.getMusico());</span>
+
+<span class="fc" id="L63">	    entity = repository.save(entity);</span>
+
+<span class="fc" id="L65">	    return new MusicoInstrumentoDTO(entity);</span>
+	}
+
+
+	@Transactional
+	public MusicoInstrumentoDTO update(Long id, MusicoInstrumentoDTO dto) {
+		 // Verifique se já existe um registro com a mesma combinação de músico e instrumento
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">	    if (repository.existsByMusicoAndInstrumento(dto.getMusico(), dto.getInstrumento())) {</span>
+<span class="nc" id="L73">	        throw new ResourceNotFoundException(&quot;Registro já existe, este músico já toca este instrumento.&quot;);</span>
+	    }
+	    
+		try {
+<span class="fc" id="L77">			MusicoInstrumento entity = repository.getReferenceById(id);</span>
+			
+<span class="fc" id="L79">			entity.setInstrumento(dto.getInstrumento());</span>
+<span class="fc" id="L80">			entity.setMusico(dto.getMusico());</span>
+			
+<span class="fc" id="L82">			entity = repository.save(entity);</span>
+	
+<span class="fc" id="L84">			return new MusicoInstrumentoDTO(entity);</span>
+<span class="fc" id="L85">		} catch(EntityNotFoundException e) {</span>
+<span class="fc" id="L86">			throw new ResourceNotFoundException(</span>
+<span class="fc" id="L87">					&quot;O recurso com o ID &quot;+id+&quot; não foi localizado&quot;);</span>
+		}
+	}
+
+	public void delete(Long id) {
+		try {
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		if(repository.existsById(id)) {</span>
+<span class="fc" id="L94">			repository.deleteById(id);</span>
+		}
+<span class="fc" id="L96">		}catch (EmptyResultDataAccessException e) {</span>
+<span class="fc" id="L97">			throw new ResourceNotFoundException(&quot;O registro solicitado não foi localizado.&quot;);</span>
+		}
+<span class="fc" id="L99">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span>band-music-system (6) (31 de jul. de 2024 22:22:57)</div></body></html>

@@ -21,7 +21,7 @@ import br.com.music.repositories.InstrumentoRepository;
 import br.com.music.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 
-public class InstrumentoServiceTest {
+public class InstrumentoServiceTests {
 
     @InjectMocks
     private InstrumentoService instrumentoService;

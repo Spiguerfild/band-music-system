@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>MusicoInstrumentoServiceTests.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">band-music-system (6) (31 de jul. de 2024 22:22:57)</a> &gt; <a href="../../index.html" class="el_group">band-music-system</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">br.com.music.services</a> &gt; <span class="el_source">MusicoInstrumentoServiceTests.java</span></div><h1>MusicoInstrumentoServiceTests.java</h1><pre class="source lang-java linenums">package br.com.music.services;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.dao.EmptyResultDataAccessException;
+
+import br.com.music.dto.MusicoInstrumentoDTO;
+import br.com.music.entities.Instrumento; // Importe a classe Instrumento
+import br.com.music.entities.Musico;
+import br.com.music.entities.MusicoInstrumento;
+import br.com.music.repositories.MusicoInstrumentoRepository;
+import br.com.music.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
+
+<span class="fc" id="L33">class MusicoInstrumentoServiceTests {</span>
+
+    @InjectMocks
+    private MusicoInstrumentoService service;
+
+    @Mock
+    private MusicoInstrumentoRepository repository;
+
+    @Mock
+    private Musico musico; // Mock para Musico
+
+    @Mock
+    private Instrumento instrumento; // Mock para Instrumento
+
+    @BeforeEach
+    void setUp() {
+<span class="fc" id="L49">        MockitoAnnotations.openMocks(this);</span>
+<span class="fc" id="L50">    }</span>
+
+    @Test
+    void testFindAll() {
+<span class="fc" id="L54">        Instrumento instrumento = new Instrumento();</span>
+<span class="fc" id="L55">        instrumento.setNome(&quot;Guitarra&quot;);</span>
+
+<span class="fc" id="L57">        Musico musico = new Musico();</span>
+<span class="fc" id="L58">        musico.setNome(&quot;João&quot;);</span>
+
+<span class="fc" id="L60">        MusicoInstrumento musicoInstrumento = new MusicoInstrumento();</span>
+<span class="fc" id="L61">        musicoInstrumento.setInstrumento(instrumento);</span>
+<span class="fc" id="L62">        musicoInstrumento.setMusico(musico);</span>
+
+<span class="fc" id="L64">        List&lt;MusicoInstrumento&gt; list = List.of(musicoInstrumento);</span>
+<span class="fc" id="L65">        when(repository.findAll()).thenReturn(list);</span>
+
+<span class="fc" id="L67">        List&lt;MusicoInstrumentoDTO&gt; result = service.findAll();</span>
+<span class="fc" id="L68">        assertFalse(result.isEmpty());</span>
+<span class="fc" id="L69">        assertEquals(&quot;Guitarra&quot;, result.get(0).getInstrumento().getNome());</span>
+<span class="fc" id="L70">        assertEquals(&quot;João&quot;, result.get(0).getMusico().getNome());</span>
+<span class="fc" id="L71">    }</span>
+
+    @Test
+    void testFindByIdWhenExists() {
+<span class="fc" id="L75">        Instrumento instrumento = new Instrumento();</span>
+<span class="fc" id="L76">        instrumento.setNome(&quot;Piano&quot;);</span>
+
+<span class="fc" id="L78">        Musico musico = new Musico();</span>
+<span class="fc" id="L79">        musico.setNome(&quot;Maria&quot;);</span>
+
+<span class="fc" id="L81">        MusicoInstrumento musicoInstrumento = new MusicoInstrumento();</span>
+<span class="fc" id="L82">        musicoInstrumento.setInstrumento(instrumento);</span>
+<span class="fc" id="L83">        musicoInstrumento.setMusico(musico);</span>
+
+<span class="fc" id="L85">        when(repository.findById(anyLong())).thenReturn(Optional.of(musicoInstrumento));</span>
+
+<span class="fc" id="L87">        MusicoInstrumentoDTO result = service.findById(1L);</span>
+<span class="fc" id="L88">        assertNotNull(result);</span>
+<span class="fc" id="L89">        assertEquals(&quot;Piano&quot;, result.getInstrumento().getNome());</span>
+<span class="fc" id="L90">        assertEquals(&quot;Maria&quot;, result.getMusico().getNome());</span>
+<span class="fc" id="L91">    }</span>
+
+    @Test
+    void testFindByIdWhenNotExists() {
+<span class="fc" id="L95">        when(repository.findById(anyLong())).thenReturn(Optional.empty());</span>
+
+<span class="fc" id="L97">        ResourceNotFoundException thrown = assertThrows(ResourceNotFoundException.class, () -&gt; {</span>
+<span class="nc" id="L98">            service.findById(1L);</span>
+<span class="nc" id="L99">        });</span>
+
+<span class="fc" id="L101">        assertEquals(&quot;O registro solicitado não foi localizado.&quot;, thrown.getMessage());</span>
+<span class="fc" id="L102">    }</span>
+
+    @Test
+    void testInsertWhenNotExists() {
+<span class="fc" id="L106">        Instrumento instrumento = new Instrumento();</span>
+<span class="fc" id="L107">        instrumento.setNome(&quot;Bateria&quot;);</span>
+
+<span class="fc" id="L109">        Musico musico = new Musico();</span>
+<span class="fc" id="L110">        musico.setNome(&quot;Carlos&quot;);</span>
+
+<span class="fc" id="L112">        MusicoInstrumentoDTO dto = new MusicoInstrumentoDTO();</span>
+<span class="fc" id="L113">        dto.setInstrumento(instrumento);</span>
+<span class="fc" id="L114">        dto.setMusico(musico);</span>
+
+<span class="fc" id="L116">        when(repository.existsByMusicoAndInstrumento(dto.getMusico(), dto.getInstrumento())).thenReturn(false);</span>
+
+<span class="fc" id="L118">        MusicoInstrumento musicoInstrumento = new MusicoInstrumento();</span>
+<span class="fc" id="L119">        musicoInstrumento.setInstrumento(instrumento);</span>
+<span class="fc" id="L120">        musicoInstrumento.setMusico(musico);</span>
+
+<span class="fc" id="L122">        when(repository.save(any(MusicoInstrumento.class))).thenReturn(musicoInstrumento);</span>
+
+<span class="fc" id="L124">        MusicoInstrumentoDTO result = service.insert(dto);</span>
+<span class="fc" id="L125">        assertNotNull(result);</span>
+<span class="fc" id="L126">        assertEquals(&quot;Bateria&quot;, result.getInstrumento().getNome());</span>
+<span class="fc" id="L127">        assertEquals(&quot;Carlos&quot;, result.getMusico().getNome());</span>
+<span class="fc" id="L128">    }</span>
+
+    @Test
+    void testInsertWhenExists() {
+<span class="fc" id="L132">        Instrumento instrumento = new Instrumento();</span>
+<span class="fc" id="L133">        instrumento.setNome(&quot;Viola&quot;);</span>
+
+<span class="fc" id="L135">        Musico musico = new Musico();</span>
+<span class="fc" id="L136">        musico.setNome(&quot;Ana&quot;);</span>
+
+<span class="fc" id="L138">        MusicoInstrumentoDTO dto = new MusicoInstrumentoDTO();</span>
+<span class="fc" id="L139">        dto.setInstrumento(instrumento);</span>
+<span class="fc" id="L140">        dto.setMusico(musico);</span>
+
+<span class="fc" id="L142">        when(repository.existsByMusicoAndInstrumento(dto.getMusico(), dto.getInstrumento())).thenReturn(true);</span>
+
+<span class="fc" id="L144">        ResourceNotFoundException thrown = assertThrows(ResourceNotFoundException.class, () -&gt; {</span>
+<span class="nc" id="L145">            service.insert(dto);</span>
+<span class="nc" id="L146">        });</span>
+
+<span class="fc" id="L148">        assertEquals(&quot;Registro já existe, este músico já toca este instrumento.&quot;, thrown.getMessage());</span>
+<span class="fc" id="L149">    }</span>
+
+    @Test
+    void testUpdateWhenExists() {
+<span class="fc" id="L153">        Instrumento instrumento = new Instrumento();</span>
+<span class="fc" id="L154">        instrumento.setNome(&quot;Violino&quot;);</span>
+
+<span class="fc" id="L156">        Musico musico = new Musico();</span>
+<span class="fc" id="L157">        musico.setNome(&quot;Pedro&quot;);</span>
+
+<span class="fc" id="L159">        MusicoInstrumentoDTO dto = new MusicoInstrumentoDTO();</span>
+<span class="fc" id="L160">        dto.setInstrumento(instrumento);</span>
+<span class="fc" id="L161">        dto.setMusico(musico);</span>
+
+<span class="fc" id="L163">        MusicoInstrumento musicoInstrumento = new MusicoInstrumento();</span>
+<span class="fc" id="L164">        musicoInstrumento.setInstrumento(new Instrumento()); // Use um objeto Instrumento diferente</span>
+<span class="fc" id="L165">        musicoInstrumento.setMusico(new Musico()); // Use um objeto Musico diferente</span>
+
+<span class="fc" id="L167">        when(repository.existsByMusicoAndInstrumento(dto.getMusico(), dto.getInstrumento())).thenReturn(false);</span>
+<span class="fc" id="L168">        when(repository.getReferenceById(anyLong())).thenReturn(musicoInstrumento);</span>
+<span class="fc" id="L169">        when(repository.save(any(MusicoInstrumento.class))).thenReturn(musicoInstrumento);</span>
+
+<span class="fc" id="L171">        MusicoInstrumentoDTO result = service.update(1L, dto);</span>
+<span class="fc" id="L172">        assertNotNull(result);</span>
+<span class="fc" id="L173">        assertEquals(&quot;Violino&quot;, result.getInstrumento().getNome());</span>
+<span class="fc" id="L174">        assertEquals(&quot;Pedro&quot;, result.getMusico().getNome());</span>
+<span class="fc" id="L175">    }</span>
+
+    @Test
+    void testUpdateWhenNotExists() {
+<span class="fc" id="L179">        Instrumento instrumento = new Instrumento();</span>
+<span class="fc" id="L180">        instrumento.setNome(&quot;Teclado&quot;);</span>
+
+<span class="fc" id="L182">        Musico musico = new Musico();</span>
+<span class="fc" id="L183">        musico.setNome(&quot;Laura&quot;);</span>
+
+<span class="fc" id="L185">        MusicoInstrumentoDTO dto = new MusicoInstrumentoDTO();</span>
+<span class="fc" id="L186">        dto.setInstrumento(instrumento);</span>
+<span class="fc" id="L187">        dto.setMusico(musico);</span>
+
+<span class="fc" id="L189">        when(repository.existsByMusicoAndInstrumento(dto.getMusico(), dto.getInstrumento())).thenReturn(false);</span>
+<span class="fc" id="L190">        when(repository.getReferenceById(anyLong())).thenThrow(EntityNotFoundException.class);</span>
+
+<span class="fc" id="L192">        ResourceNotFoundException thrown = assertThrows(ResourceNotFoundException.class, () -&gt; {</span>
+<span class="nc" id="L193">            service.update(1L, dto);</span>
+<span class="nc" id="L194">        });</span>
+
+<span class="fc" id="L196">        assertEquals(&quot;O recurso com o ID 1 não foi localizado&quot;, thrown.getMessage());</span>
+<span class="fc" id="L197">    }</span>
+
+    @Test
+    void testDeleteWhenExists() {
+<span class="fc" id="L201">        when(repository.existsById(anyLong())).thenReturn(true);</span>
+
+<span class="fc" id="L203">        assertDoesNotThrow(() -&gt; service.delete(1L));</span>
+<span class="fc" id="L204">        verify(repository, times(1)).deleteById(1L);</span>
+<span class="fc" id="L205">    }</span>
+
+    @Test
+    void testDeleteWhenNotExists() {
+<span class="fc" id="L209">        when(repository.existsById(anyLong())).thenReturn(false);</span>
+
+<span class="fc" id="L211">        assertDoesNotThrow(() -&gt; service.delete(1L));</span>
+<span class="fc" id="L212">        verify(repository, times(0)).deleteById(anyLong());</span>
+<span class="fc" id="L213">    }</span>
+
+    @Test
+    void testDeleteWhenException() {
+<span class="fc" id="L217">        when(repository.existsById(anyLong())).thenReturn(true);</span>
+<span class="fc" id="L218">        doThrow(new EmptyResultDataAccessException(1)).when(repository).deleteById(anyLong());</span>
+
+<span class="fc" id="L220">        ResourceNotFoundException thrown = assertThrows(ResourceNotFoundException.class, () -&gt; {</span>
+<span class="nc" id="L221">            service.delete(1L);</span>
+<span class="nc" id="L222">        });</span>
+
+<span class="fc" id="L224">        assertEquals(&quot;O registro solicitado não foi localizado.&quot;, thrown.getMessage());</span>
+<span class="fc" id="L225">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span>band-music-system (6) (31 de jul. de 2024 22:22:57)</div></body></html>

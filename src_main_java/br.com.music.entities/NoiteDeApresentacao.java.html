@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>NoiteDeApresentacao.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">band-music-system (6) (31 de jul. de 2024 22:22:57)</a> &gt; <a href="../../index.html" class="el_group">band-music-system</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">br.com.music.entities</a> &gt; <span class="el_source">NoiteDeApresentacao.java</span></div><h1>NoiteDeApresentacao.java</h1><pre class="source lang-java linenums">package br.com.music.entities;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = &quot;tb_noitedeapresentacao&quot;)
+public class NoiteDeApresentacao implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	private LocalDate data;
+	@ManyToOne
+	@JoinColumn(name = &quot;id_banda_fk&quot;)
+	private Banda banda;
+	
+	@ManyToMany
+	@JoinTable(name = &quot;tb_musicasdanoitedeapresentacao&quot;,
+	joinColumns = @JoinColumn(name = &quot;noite_apresentacao_id&quot;),
+	inverseJoinColumns = @JoinColumn(name = &quot;musica_id&quot;))
+<span class="pc" id="L37">	Set&lt;Musica&gt; musicas = new HashSet&lt;&gt;();</span>
+	
+	
+<span class="fc" id="L40">	public NoiteDeApresentacao() {</span>
+		
+		
+<span class="fc" id="L43">	}</span>
+
+
+<span class="nc" id="L46">	public NoiteDeApresentacao(Long id, LocalDate data, Banda banda) {</span>
+		
+<span class="nc" id="L48">		this.id = id;</span>
+<span class="nc" id="L49">		this.data = data;</span>
+<span class="nc" id="L50">		this.banda = banda;</span>
+<span class="nc" id="L51">	}</span>
+
+
+	public Long getId() {
+<span class="nc" id="L55">		return id;</span>
+	}
+
+
+	public void setId(Long id) {
+<span class="nc" id="L60">		this.id = id;</span>
+<span class="nc" id="L61">	}</span>
+
+
+	public LocalDate getData() {
+<span class="nc" id="L65">		return data;</span>
+	}
+
+
+	public void setData(LocalDate data) {
+<span class="nc" id="L70">		this.data = data;</span>
+<span class="nc" id="L71">	}</span>
+
+
+	public Banda getBanda() {
+<span class="nc" id="L75">		return banda;</span>
+	}
+
+
+	public void setBanda(Banda banda) {
+<span class="nc" id="L80">		this.banda = banda;</span>
+<span class="nc" id="L81">	}</span>
+
+	public void add(Musica musica) {
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (musicas == null) {</span>
+<span class="nc" id="L85">			musicas = new HashSet&lt;&gt;();</span>
+		}
+<span class="nc" id="L87">		musicas.add(musica);</span>
+<span class="nc" id="L88">	}</span>
+	
+	public void del(Musica musica) {
+<span class="nc bnc" id="L91" title="All 2 branches missed.">	    if (musicas != null) {</span>
+<span class="nc" id="L92">	    	musicas.remove(musica);</span>
+	    }
+<span class="nc" id="L94">	}</span>
+
+
+	public Set&lt;Musica&gt; getMusicas() {
+<span class="nc" id="L98">		return musicas;</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="nc" id="L103">		return Objects.hash(id);</span>
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (this == obj)</span>
+<span class="nc" id="L110">			return true;</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (obj == null)</span>
+<span class="nc" id="L112">			return false;</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (getClass() != obj.getClass())</span>
+<span class="nc" id="L114">			return false;</span>
+<span class="nc" id="L115">		NoiteDeApresentacao other = (NoiteDeApresentacao) obj;</span>
+<span class="nc" id="L116">		return Objects.equals(id, other.id);</span>
+	}
+
+	
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span>band-music-system (6) (31 de jul. de 2024 22:22:57)</div></body></html>

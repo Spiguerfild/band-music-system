@@ -26,7 +26,7 @@ import br.com.music.entities.MusicoInstrumento;
 import br.com.music.repositories.BandaRepository;
 import br.com.music.repositories.MusicoInstrumentoRepository;
 
-public class BandaServiceTest {
+public class BandaServiceTests {
 
     @InjectMocks
     private BandaService bandaService;
