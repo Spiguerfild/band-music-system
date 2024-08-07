@@ -2,6 +2,7 @@ package br.com.music.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
@@ -25,6 +26,8 @@ import br.com.music.entities.Banda;
 import br.com.music.entities.MusicoInstrumento;
 import br.com.music.repositories.BandaRepository;
 import br.com.music.repositories.MusicoInstrumentoRepository;
+import br.com.music.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 
 public class BandaServiceTests {
 
@@ -46,7 +49,7 @@ public class BandaServiceTests {
     public void testFindAllMusicosInstrumentos() {
         Long bandaId = 1L;
         Banda banda = mock(Banda.class);
-        Set<MusicoInstrumento> musicosInstrumentos = new HashSet<>(); // Usar um conjunto real ao invés de um mock
+        Set<MusicoInstrumento> musicosInstrumentos = new HashSet<>();
 
         when(bandaRepository.findById(bandaId)).thenReturn(Optional.of(banda));
         when(banda.getMusicosInstrumentos()).thenReturn(musicosInstrumentos);
@@ -56,6 +59,15 @@ public class BandaServiceTests {
         assertNotNull(result);
         verify(bandaRepository).findById(bandaId);
         verify(banda).getMusicosInstrumentos();
+    }
+
+    @Test
+    public void testFindAllMusicosInstrumentos_NotFound() {
+        Long bandaId = 1L;
+
+        when(bandaRepository.findById(bandaId)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> bandaService.findAllMusicosInstrumentos(bandaId));
     }
 
     @Test
@@ -75,6 +87,28 @@ public class BandaServiceTests {
     }
 
     @Test
+    public void testAssociarMusicoABanda_BandaNotFound() {
+        Long bandaId = 1L;
+        Long musicoInstrumentoId = 1L;
+
+        when(bandaRepository.findById(bandaId)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> bandaService.associarMusicoABanda(musicoInstrumentoId, bandaId));
+    }
+
+    @Test
+    public void testAssociarMusicoABanda_MusicoInstrumentoNotFound() {
+        Long bandaId = 1L;
+        Long musicoInstrumentoId = 1L;
+        Banda banda = mock(Banda.class);
+
+        when(bandaRepository.findById(bandaId)).thenReturn(Optional.of(banda));
+        when(musicoInstrumentoRepository.findById(musicoInstrumentoId)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> bandaService.associarMusicoABanda(musicoInstrumentoId, bandaId));
+    }
+
+    @Test
     public void testDeleteMusicoInstrumentoDaBanda() {
         Long bandaId = 1L;
         Long musicoInstrumentoId = 1L;
@@ -88,6 +122,28 @@ public class BandaServiceTests {
 
         verify(banda).del(musicoInstrumento);
         verify(bandaRepository).save(banda);
+    }
+
+    @Test
+    public void testDeleteMusicoInstrumentoDaBanda_BandaNotFound() {
+        Long bandaId = 1L;
+        Long musicoInstrumentoId = 1L;
+
+        when(bandaRepository.findById(bandaId)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> bandaService.deleteMusicoInstrumentoDaBanda(musicoInstrumentoId, bandaId));
+    }
+
+    @Test
+    public void testDeleteMusicoInstrumentoDaBanda_MusicoInstrumentoNotFound() {
+        Long bandaId = 1L;
+        Long musicoInstrumentoId = 1L;
+        Banda banda = mock(Banda.class);
+
+        when(bandaRepository.findById(bandaId)).thenReturn(Optional.of(banda));
+        when(musicoInstrumentoRepository.findById(musicoInstrumentoId)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> bandaService.deleteMusicoInstrumentoDaBanda(musicoInstrumentoId, bandaId));
     }
 
     @Test
@@ -111,6 +167,15 @@ public class BandaServiceTests {
 
         assertNotNull(result);
         verify(bandaRepository).findById(id);
+    }
+
+    @Test
+    public void testFindById_NotFound() {
+        Long id = 1L;
+
+        when(bandaRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> bandaService.findById(id));
     }
 
     @Test
@@ -149,6 +214,17 @@ public class BandaServiceTests {
     }
 
     @Test
+    public void testUpdate_NotFound() {
+        Long id = 1L;
+        BandaDTO dto = new BandaDTO();
+        dto.setNome("Banda Atualizada");
+
+        when(bandaRepository.getReferenceById(id)).thenThrow(new EntityNotFoundException());
+
+        assertThrows(ResourceNotFoundException.class, () -> bandaService.update(id, dto));
+    }
+
+    @Test
     public void testDelete() {
         Long id = 1L;
 
@@ -159,6 +235,8 @@ public class BandaServiceTests {
 
         verify(bandaRepository).deleteById(id);
     }
+
+
 
     @Test
     public void testFindByBanda() {
