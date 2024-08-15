@@ -32,16 +32,6 @@ public class BandaResource {
 	private BandaService service;
 	
 
-	
-//	@GetMapping("/{bandaId}/musicosinstrumentos")
-//	public ResponseEntity<List<MusicoInstrumento>> getMusicosDaBanda(@PathVariable Long bandaId) {
-//	    Banda banda = repository.findById(bandaId)
-//	            .orElseThrow(() -> new ResourceNotFoundException("Banda não encontrada"));
-//
-//	    Set<MusicoInstrumento> musicosDaBanda = banda.getMusicosInstrumentos();
-//
-//	    return ResponseEntity.ok(new ArrayList<>(musicosDaBanda));
-//	}
 
 	@GetMapping("/{bandaId}/musicosinstrumentos")
 	public ResponseEntity<List<MusicoInstrumento>> getMusicosDaBanda(@PathVariable Long bandaId) {
