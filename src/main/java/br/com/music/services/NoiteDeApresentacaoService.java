@@ -31,95 +31,133 @@ public class NoiteDeApresentacaoService {
 	@Autowired
 	private MusicaRepository musicaRepository;
 
-	//noite de apresentação associando musicas  
-	@Transactional(readOnly = true) 
+	/**
+	 * Retorna a lista de músicas associadas a uma noite de apresentaçao.
+	 * 
+	 * @param noiteId ID da noite de apresentação.
+	 * @return Lista de músicas associadas à noite.
+	 */
+	@Transactional(readOnly = true)
 	public List<Musica> findAllMusicasDaNoite(@PathVariable Long noiteId) {
-	    NoiteDeApresentacao noite = repository.findById(noiteId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Noite de apresentação não encontrada"));
+		NoiteDeApresentacao noite = repository.findById(noiteId)
+				.orElseThrow(() -> new ResourceNotFoundException("Noite de apresentação nao encontrada"));
 
-	    Set<Musica> musicasDaNoite = noite.getMusicas();
+		Set<Musica> musicasDaNoite = noite.getMusicas();
 
-	    return new ArrayList<>(musicasDaNoite);
+		return new ArrayList<>(musicasDaNoite);
 	}
 
-
+	/**
+	 * Associa uma musica a uma noite de apresentação.
+	 * 
+	 * @param musicaId ID da musica.
+	 * @param noiteId  ID da noite de apresentação.
+	 */
 	@Transactional
 	public void associarMusicaANoite(Long musicaId, Long noiteId) {
-
-		  NoiteDeApresentacao noite = repository.findById(noiteId)
+		NoiteDeApresentacao noite = repository.findById(noiteId)
 				.orElseThrow(() -> new ResourceNotFoundException("Noite de apresentação não encontrada"));
 		Musica musica = musicaRepository.findById(musicaId)
-				.orElseThrow(() -> new ResourceNotFoundException("Musica não encontrado"));
+				.orElseThrow(() -> new ResourceNotFoundException("Música não encontrada"));
 
 		noite.add(musica);
 		repository.save(noite);
 	}
 
+	/**
+	 * Remove uma música de uma noite de apresentação.
+	 * 
+	 * @param musicaId ID da musica.
+	 * @param noiteId  ID da noite de apresentação.
+	 */
 	@Transactional
 	public void deleteMusicaDaNoite(Long musicaId, Long noiteId) {
-		
-		 NoiteDeApresentacao noite  = repository.findById(noiteId)
+		NoiteDeApresentacao noite = repository.findById(noiteId)
 				.orElseThrow(() -> new ResourceNotFoundException("Noite de apresentação não encontrada"));
-		 Musica musica = musicaRepository.findById(musicaId)
-				.orElseThrow(() -> new ResourceNotFoundException("Musica não encontrado"));
-		
+		Musica musica = musicaRepository.findById(musicaId)
+				.orElseThrow(() -> new ResourceNotFoundException("Música não encontrada"));
+
 		noite.del(musica);
 		repository.save(noite);
-		
 	}
-	
-	//noite de apresentação crud
-	
+
+	/**
+	 * Retorna todas as noites de apresentação.
+	 * 
+	 * @return Lista de DTOs de noites de apresentação.
+	 */
 	@Transactional(readOnly = true)
-	public List<NoiteDeApresentacaoDTO> findAll(){
+	public List<NoiteDeApresentacaoDTO> findAll() {
 		List<NoiteDeApresentacao> lista = repository.findAll();
 		return lista.stream().map(x -> new NoiteDeApresentacaoDTO(x)).collect(Collectors.toList());
 	}
-	
+
+	/**
+	 * Retorna uma noite de apresentação pelo ID.
+	 * 
+	 * @param id ID da noite de apresentação.
+	 * @return DTO da noite de apresentação.
+	 */
 	@Transactional(readOnly = true)
 	public NoiteDeApresentacaoDTO findById(Long id) {
 		Optional<NoiteDeApresentacao> obj = repository.findById(id);
-		
-		NoiteDeApresentacao entity = obj.orElseThrow(() -> new ResourceNotFoundException("O registro solicitado não foi localizado."));
-		return new NoiteDeApresentacaoDTO(entity);		
+
+		NoiteDeApresentacao entity = obj
+				.orElseThrow(() -> new ResourceNotFoundException("O registro solicitado não foi localizado."));
+		return new NoiteDeApresentacaoDTO(entity);
 	}
 
+	/**
+	 * Insere uma nova noite de apresentação.
+	 * 
+	 * @param dto DTO contendo os dados da nova noite de apresentação.
+	 * @return DTO da noite de apresentação inserida.
+	 */
 	@Transactional
 	public NoiteDeApresentacaoDTO insert(NoiteDeApresentacaoDTO dto) {
 		NoiteDeApresentacao entity = new NoiteDeApresentacao();
 		entity.setBanda(dto.getBanda());
 		entity.setData(dto.getData());
-		
+
 		entity = repository.save(entity);
 
 		return new NoiteDeApresentacaoDTO(entity);
 	}
 
+	/**
+	 * Atualiza uma noite de apresentação existente.
+	 * 
+	 * @param id  ID da noite de apresentação a ser atualizada.
+	 * @param dto DTO contendo os novos dados.
+	 * @return DTO da noite de apresentação atualizada.
+	 */
 	@Transactional
 	public NoiteDeApresentacaoDTO update(Long id, NoiteDeApresentacaoDTO dto) {
-		
 		try {
 			NoiteDeApresentacao entity = repository.getReferenceById(id);
-			
+
 			entity.setBanda(dto.getBanda());
 			entity.setData(dto.getData());
-	
-			
+
 			entity = repository.save(entity);
-	
+
 			return new NoiteDeApresentacaoDTO(entity);
-		} catch(EntityNotFoundException e) {
-			throw new ResourceNotFoundException(
-					"O recurso com o ID "+id+" não foi localizado");
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("O recurso com o ID " + id + " não foi localizado");
 		}
 	}
 
+	/**
+	 * Remove uma noite de apresentação pelo ID.
+	 * 
+	 * @param id ID da noite de apresentação a ser removida.
+	 */
 	public void delete(Long id) {
 		try {
-		if(repository.existsById(id)) {
-			repository.deleteById(id);
-		}
-		}catch (EmptyResultDataAccessException e) {
+			if (repository.existsById(id)) {
+				repository.deleteById(id);
+			}
+		} catch (EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException("O registro solicitado não foi localizado.");
 		}
 	}

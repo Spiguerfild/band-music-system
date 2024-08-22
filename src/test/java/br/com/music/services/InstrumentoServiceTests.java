@@ -2,6 +2,7 @@ package br.com.music.services;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import br.com.music.dto.InstrumentoDTO;
 import br.com.music.entities.Instrumento;
@@ -23,116 +25,126 @@ import jakarta.persistence.EntityNotFoundException;
 
 public class InstrumentoServiceTests {
 
-    @InjectMocks
-    private InstrumentoService instrumentoService;
+	@InjectMocks
+	private InstrumentoService instrumentoService;
 
-    @Mock
-    private InstrumentoRepository instrumentoRepository;
+	@Mock
+	private InstrumentoRepository instrumentoRepository;
 
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
+	@BeforeEach
+	public void setUp() {
+		MockitoAnnotations.openMocks(this);
+	}
 
-    @Test
-    public void testFindAll() {
-        List<Instrumento> lista = new ArrayList<>();
-        lista.add(new Instrumento());
-        lista.add(new Instrumento());
+	@Test
+	void whenFindById_thenThrowsResourceNotFoundException() {
+		Long id = 1L;
 
-        when(instrumentoRepository.findAll()).thenReturn(lista);
+		when(instrumentoRepository.findById(id)).thenReturn(Optional.empty());
 
-        List<InstrumentoDTO> result = instrumentoService.findAll();
+		assertThrows(ResourceNotFoundException.class, () -> {
+			instrumentoService.findById(id);
+		});
+	}
 
-        assertNotNull(result);
-        verify(instrumentoRepository).findAll();
-    }
 
-    @Test
-    public void testFindById() {
-        Long id = 1L;
-        Instrumento instrumento = new Instrumento();
-        instrumento.setNome("Guitarra");
 
-        when(instrumentoRepository.findById(id)).thenReturn(Optional.of(instrumento));
+	@Test
+	public void testFindAll() {
+		List<Instrumento> lista = new ArrayList<>();
+		lista.add(new Instrumento());
+		lista.add(new Instrumento());
 
-        InstrumentoDTO result = instrumentoService.findById(id);
+		when(instrumentoRepository.findAll()).thenReturn(lista);
 
-        assertNotNull(result);
-        verify(instrumentoRepository).findById(id);
-    }
+		List<InstrumentoDTO> result = instrumentoService.findAll();
 
-    @Test
-    public void testFindByIdNotFound() {
-        Long id = 1L;
+		assertNotNull(result);
+		verify(instrumentoRepository).findAll();
+	}
 
-        when(instrumentoRepository.findById(id)).thenReturn(Optional.empty());
+	@Test
+	public void testFindById() {
+		Long id = 1L;
+		Instrumento instrumento = new Instrumento();
+		instrumento.setNome("Guitarra");
 
-        assertThrows(ResourceNotFoundException.class, () -> {
-            instrumentoService.findById(id);
-        });
-    }
+		when(instrumentoRepository.findById(id)).thenReturn(Optional.of(instrumento));
 
-    @Test
-    public void testInsert() {
-        InstrumentoDTO dto = new InstrumentoDTO();
-        dto.setNome("Guitarra");
+		InstrumentoDTO result = instrumentoService.findById(id);
 
-        Instrumento instrumento = new Instrumento();
-        instrumento.setNome(dto.getNome());
+		assertNotNull(result);
+		verify(instrumentoRepository).findById(id);
+	}
 
-        when(instrumentoRepository.save(instrumento)).thenReturn(instrumento);
+	@Test
+	public void testFindByIdNotFound() {
+		Long id = 1L;
 
-        InstrumentoDTO result = instrumentoService.insert(dto);
+		when(instrumentoRepository.findById(id)).thenReturn(Optional.empty());
 
-        assertNotNull(result);
-        verify(instrumentoRepository).save(instrumento);
-    }
+		assertThrows(ResourceNotFoundException.class, () -> {
+			instrumentoService.findById(id);
+		});
+	}
 
-    @Test
-    public void testUpdate() {
-        Long id = 1L;
-        InstrumentoDTO dto = new InstrumentoDTO();
-        dto.setNome("Violino");
+	@Test
+	public void testInsert() {
+		InstrumentoDTO dto = new InstrumentoDTO();
+		dto.setNome("Guitarra");
 
-        Instrumento instrumento = new Instrumento();
-        instrumento.setNome("Guitarra");
+		Instrumento instrumento = new Instrumento();
+		instrumento.setNome(dto.getNome());
 
-        when(instrumentoRepository.getReferenceById(id)).thenReturn(instrumento);
-        when(instrumentoRepository.save(instrumento)).thenReturn(instrumento);
+		when(instrumentoRepository.save(instrumento)).thenReturn(instrumento);
 
-        InstrumentoDTO result = instrumentoService.update(id, dto);
+		InstrumentoDTO result = instrumentoService.insert(dto);
 
-        assertNotNull(result);
-        verify(instrumentoRepository).getReferenceById(id);
-        verify(instrumentoRepository).save(instrumento);
-    }
+		assertNotNull(result);
+		verify(instrumentoRepository).save(instrumento);
+	}
 
-    @Test
-    public void testUpdateNotFound() {
-        Long id = 1L;
-        InstrumentoDTO dto = new InstrumentoDTO();
-        dto.setNome("Violino");
+	@Test
+	public void testUpdate() {
+		Long id = 1L;
+		InstrumentoDTO dto = new InstrumentoDTO();
+		dto.setNome("Violino");
 
-        when(instrumentoRepository.getReferenceById(id)).thenThrow(new EntityNotFoundException());
+		Instrumento instrumento = new Instrumento();
+		instrumento.setNome("Guitarra");
 
-        assertThrows(ResourceNotFoundException.class, () -> {
-            instrumentoService.update(id, dto);
-        });
-    }
+		when(instrumentoRepository.getReferenceById(id)).thenReturn(instrumento);
+		when(instrumentoRepository.save(instrumento)).thenReturn(instrumento);
 
-    @Test
-    public void testDelete() {
-        Long id = 1L;
+		InstrumentoDTO result = instrumentoService.update(id, dto);
 
-        when(instrumentoRepository.existsById(id)).thenReturn(true);
+		assertNotNull(result);
+		verify(instrumentoRepository).getReferenceById(id);
+		verify(instrumentoRepository).save(instrumento);
+	}
 
-        instrumentoService.delete(id);
+	@Test
+	public void testUpdateNotFound() {
+		Long id = 1L;
+		InstrumentoDTO dto = new InstrumentoDTO();
+		dto.setNome("Violino");
 
-        verify(instrumentoRepository).deleteById(id);
-    }
+		when(instrumentoRepository.getReferenceById(id)).thenThrow(new EntityNotFoundException());
 
-   
-    
+		assertThrows(ResourceNotFoundException.class, () -> {
+			instrumentoService.update(id, dto);
+		});
+	}
+
+	@Test
+	public void testDelete() {
+		Long id = 1L;
+
+		when(instrumentoRepository.existsById(id)).thenReturn(true);
+
+		instrumentoService.delete(id);
+
+		verify(instrumentoRepository).deleteById(id);
+	}
 
 }
