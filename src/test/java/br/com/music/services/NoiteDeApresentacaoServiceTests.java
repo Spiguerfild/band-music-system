@@ -56,8 +56,6 @@ public class NoiteDeApresentacaoServiceTests {
         musicaRepository.save(musica);
     }
 
-  
-
     @Test
     void testFindById() {
         NoiteDeApresentacaoDTO dto = service.findById(noiteDeApresentacao.getId());
@@ -89,7 +87,6 @@ public class NoiteDeApresentacaoServiceTests {
         assertEquals(LocalDate.now().plusDays(1), result.getData());
     }
 
-   
     @Test
     void testAssociarMusicaANoite() {
         service.associarMusicaANoite(musica.getId(), noiteDeApresentacao.getId());
@@ -116,4 +113,20 @@ public class NoiteDeApresentacaoServiceTests {
         assertEquals(1, musicas.size());
         assertTrue(musicas.contains(musica));
     }
+
+    @Test
+    void testAssociarMusicaANoite_MusicaNaoEncontrada() {
+        assertThrows(ResourceNotFoundException.class, () -> {
+            service.associarMusicaANoite(musica.getId() + 1, noiteDeApresentacao.getId());
+        });
+    }
+
+    @Test
+    void testAssociarMusicaANoite_NoiteNaoEncontrada() {
+        assertThrows(ResourceNotFoundException.class, () -> {
+            service.associarMusicaANoite(musica.getId(), noiteDeApresentacao.getId() + 1);
+        });
+    }
+
+   
 }

@@ -32,7 +32,7 @@ public class NoiteDeApresentacaoService {
 	private MusicaRepository musicaRepository;
 
 	/**
-	 * Retorna a lista de músicas associadas a uma noite de apresentaçao.
+	 * Retorna a lista de músicas associadas a uma noite de apresentação.
 	 * 
 	 * @param noiteId ID da noite de apresentação.
 	 * @return Lista de músicas associadas à noite.
@@ -50,7 +50,7 @@ public class NoiteDeApresentacaoService {
 	/**
 	 * Associa uma musica a uma noite de apresentação.
 	 * 
-	 * @param musicaId ID da musica.
+	 * @param musicaId ID da música.
 	 * @param noiteId  ID da noite de apresentação.
 	 */
 	@Transactional
